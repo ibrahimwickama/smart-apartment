@@ -9,6 +9,7 @@ export const pageStatesFeatureKey = 'pageStates';
 export interface State extends EntityState<PageState> {
   // additional entities state properties
   currentDevice: string;
+  loadingApartListings: boolean;
   notification: NotificationPayload;
   notificationStatus: boolean;
   agentInfo: AgentInfo;
@@ -21,6 +22,7 @@ export const adapter: EntityAdapter<PageState> = createEntityAdapter<
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
   currentDevice: '',
+  loadingApartListings: true,
   notification: { message: '', statusCode: 0 },
   notificationStatus: false,
   agentInfo: {
@@ -50,6 +52,7 @@ export const reducer = createReducer(
   on(PageStateActions.addAgentListing, (state, action) =>
     adapter.addMany(sanitizeApartmentListingPayload(action.payload.records), {
       ...state,
+      loadingApartListings: false,
       agentInfo: action.payload.agentInfo,
     })
   )
@@ -64,5 +67,7 @@ export const {
 
 export const getCurrentDeviceState = (state: State) => state.currentDevice;
 export const getNotificationState = (state: State) => state.notification;
+export const getApartmentListingsLoadingState = (state: State) =>
+  state.loadingApartListings;
 export const getNotificationStatusState = (state: State) =>
   state.notificationStatus;

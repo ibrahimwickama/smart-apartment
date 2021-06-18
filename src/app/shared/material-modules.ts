@@ -17,6 +17,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatChipsModule } from '@angular/material/chips';
 
 export const materialModules: any[] = [
   MatRippleModule,
@@ -38,4 +39,5 @@ export const materialModules: any[] = [
   MatDividerModule,
   MatCheckboxModule,
   MatExpansionModule,
+  MatChipsModule,
 ];

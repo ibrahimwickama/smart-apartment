@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { AppState } from '../../../store/reducers';
 import * as fromSelectors from '../../../store/selectors';
 import { Store } from '@ngrx/store';
+import { ApartmentRecord } from 'src/app/store/models';
 
 @Component({
   selector: 'app-agent-page',
@@ -11,13 +12,21 @@ import { Store } from '@ngrx/store';
 })
 export class AgentPageComponent implements OnInit {
   apartmentListing$: Observable<any>;
+  apartmentListingsLoading$: Observable<boolean>;
   constructor(private store: Store<AppState>) {
+    this.apartmentListingsLoading$ = this.store.select(
+      fromSelectors.getApartmentListingsLoading
+    );
     this.apartmentListing$ = this.store.select(
       fromSelectors.getApartmentListingData
     );
   }
 
   ngOnInit() {}
+
+  trackByFn(index, item) {
+    return item.id;
+  }
 
   formatLabel(value: number) {
     if (value >= 1000) {

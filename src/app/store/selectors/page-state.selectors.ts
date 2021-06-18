@@ -22,6 +22,11 @@ export const getNotificationStatus = createSelector(
   fromPageStateReducer.getNotificationStatusState
 );
 
+export const getApartmentListingsLoading = createSelector(
+  getPageState,
+  fromPageStateReducer.getApartmentListingsLoadingState
+);
+
 export const getApartmentListingData = createSelector(
   getPageState,
   fromPageStateReducer.getAllApartmentListingDataState

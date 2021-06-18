@@ -54,5 +54,5 @@ export interface Geocode {
 
 export interface AgentListing {
   agentInfo: AgentInfo;
-  records: Array<ApartmentRecord>;
+  records: ApartmentRecord[];
 }

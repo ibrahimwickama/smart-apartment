@@ -6,6 +6,7 @@ import { sharedComponents } from './components';
 import { services } from './services';
 import { materialModules } from './material-modules';
 import { HttpClientModule } from '@angular/common/http';
+import { sharedPipes } from './pipes';
 
 @NgModule({
   imports: [
@@ -15,8 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     ...materialModules,
   ],
-  declarations: [...sharedComponents],
-  exports: [...sharedComponents, ...materialModules],
+  declarations: [...sharedComponents, ...sharedPipes],
+  exports: [...sharedComponents, ...materialModules, ...sharedPipes],
   providers: [...services],
 })
 export class SharedModule {}

@@ -10,6 +10,34 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
+/* Modify Scor-bar CSS
+ - WebKit-based browsers (such as Chrome and Safari)
+*/
+::-webkit-scrollbar {
+  width: 8px;
+  height: 5px;
+  /* display: none; */
+}
+
+::-webkit-scrollbar-button {
+  background: #f1f1f1;
+  display: none;
+  /* background:#888; */
+}
+
+::-webkit-scrollbar-track-piece {
+  background: #f1f1f1;
+  /* display: none; */
+  /* #f1f1f1 */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cccccc;
+  /* display: none; */
+}
+
+/* Modify Scor-bar CSS */
+
 
 
 .font-small {
@@ -98,4 +126,24 @@ body {
 
 .success-font-color {
   color: #28a745;
+}
+
+.object-fit-cover {
+  object-fit: cover !important;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden !important;
+}
+
+.font-weight-600 {
+  font-weight: 600 !important;
+}
+
+.font-bold {
+  font-weight: bold !important;
+}
+
+.favourite-icon-color {
+  color: #ffd955;
 }
