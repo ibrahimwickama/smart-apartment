@@ -148,6 +148,11 @@ body {
   color: #ffd955;
 }
 
+.favourite-icon-bg-color {
+  background-color: #ffd955 !important;
+  background: #ffd955 !important;
+}
+
 .sidenav-container {
   width: 100%;
   height: 100vh;
@@ -155,4 +160,5 @@ body {
 
 .sidenav-drawer {
   max-width: 30rem;
+  min-width: 30rem;
 }

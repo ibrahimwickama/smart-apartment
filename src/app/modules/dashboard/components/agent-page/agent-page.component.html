@@ -2,7 +2,7 @@
   <!-- sticky top section  -->
   <div class="w-100 sticky-top" [ngClass]="{'sticky-top-panel': !(apartmentListingsLoading$ | async) }">
     <div class="row d-flex align-items-center w-100 mx-0 px-2 company-title-section">
-      Cindy Little | Apartments Agent
+      {{ (agentInfo$ | async)?.firstname }} {{ (agentInfo$ | async)?.lastname }} | {{ (agentInfo$ | async)?.company }}
     </div>
     <!-- filters section -->
     <mat-accordion class="filter-accordin">

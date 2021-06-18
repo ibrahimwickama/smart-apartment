@@ -71,3 +71,4 @@ export const getApartmentListingsLoadingState = (state: State) =>
   state.loadingApartListings;
 export const getNotificationStatusState = (state: State) =>
   state.notificationStatus;
+export const getAgentInfoState = (state: State) => state.agentInfo;

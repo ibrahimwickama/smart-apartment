@@ -31,3 +31,8 @@ export const getApartmentListingData = createSelector(
   getPageState,
   fromPageStateReducer.getAllApartmentListingDataState
 );
+
+export const getAgentInfo = createSelector(
+  getPageState,
+  fromPageStateReducer.getAgentInfoState
+);

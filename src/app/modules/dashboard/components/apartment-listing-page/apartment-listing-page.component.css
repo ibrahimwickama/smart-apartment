@@ -1,0 +1,19 @@
+.company-title-section {
+  color: #fff;
+  background-color: #1976d2;
+  text-align: left;
+  white-space: nowrap;
+  min-height: 45px;
+}
+
+
+
+.listing-item-header {
+  background: #2196f3;
+  color: #fff;
+  /* min-height: 80px; */
+}
+
+.filter-header-view {
+  min-height: 45px;
+}

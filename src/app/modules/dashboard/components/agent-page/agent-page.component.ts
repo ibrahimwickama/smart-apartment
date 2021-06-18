@@ -11,11 +11,14 @@ import { Store } from '@ngrx/store';
 })
 export class AgentPageComponent implements OnInit {
   apartmentListing$: Observable<any>;
+  agentInfo$: Observable<any>;
   apartmentListingsLoading$: Observable<boolean>;
+
   constructor(private store: Store<AppState>) {
     this.apartmentListingsLoading$ = this.store.select(
       fromSelectors.getApartmentListingsLoading
     );
+    this.agentInfo$ = this.store.select(fromSelectors.getAgentInfo);
     this.apartmentListing$ = this.store.select(
       fromSelectors.getApartmentListingData
     );
