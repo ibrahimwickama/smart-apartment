@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AppState } from '../../../store/reducers';
-import * as fromSelectors from '../../../store/selectors';
+import { AppState } from '../../../../store/reducers';
+import * as fromSelectors from '../../../../store/selectors';
 import { Store } from '@ngrx/store';
-import { ApartmentRecord } from 'src/app/store/models';
 
 @Component({
   selector: 'app-agent-page',

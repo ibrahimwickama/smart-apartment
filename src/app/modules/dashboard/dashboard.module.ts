@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../../shared/shared.module';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { dashboardPagesComponents } from './pages';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
     DashboardRoutingModule,
     SharedModule,
   ],
-  declarations: [...dashboardComponents],
+  declarations: [...dashboardPagesComponents, ...dashboardComponents],
 })
 export class DashboardModule {}

@@ -11,13 +11,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  showFiller = false;
-
   constructor(private store: Store<AppState>, private snackBar: MatSnackBar) {
     this.store
       .select(fromSelectors.getNotification)
       .subscribe((notification) => {
-        // Trigger SnackaBar popUp view
+        // Trigger SnackaBar pop-up view
         if (notification.message) {
           const snackColor =
             notification.statusCode === 200
@@ -33,6 +31,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.detectCurrentDevice();
+    // Loading apartment listings data
     this.store.dispatch(fromActions.loadApartmentListings());
   }
   detectCurrentDevice() {
