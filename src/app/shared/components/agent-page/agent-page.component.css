@@ -1,0 +1,36 @@
+.company-title-section {
+  color: #fff;
+  background-color: #1976d2;
+  text-align: left;
+  white-space: nowrap;
+  min-height: 45px;
+}
+
+
+
+.appartment-filters-section {
+  background: #2196f3;
+  color: #fff;
+}
+
+.filter-header-view {
+  min-height: 45px;
+}
+
+.filter-accordin {
+  border-radius: 0px !important;
+  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, .15);
+}
+
+.filter-bg {
+  background: #2196f3;
+}
+
+mat-slider {
+  width: 300px;
+}
+
+.done-button {
+  color: #fff;
+  background-color: #1976d2;
+}

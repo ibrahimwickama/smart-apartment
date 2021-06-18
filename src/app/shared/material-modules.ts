@@ -13,6 +13,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 export const materialModules: any[] = [
   MatRippleModule,
@@ -30,4 +34,8 @@ export const materialModules: any[] = [
   MatSelectModule,
   MatStepperModule,
   MatSidenavModule,
+  MatSliderModule,
+  MatDividerModule,
+  MatCheckboxModule,
+  MatExpansionModule,
 ];
