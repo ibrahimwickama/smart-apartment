@@ -43,9 +43,9 @@ export const deletePageState = createAction(
   props<{ id: string }>()
 );
 
-export const deletePageStates = createAction(
-  '[PageState/API] Delete PageStates',
-  props<{ ids: string[] }>()
+export const loadCurrentDevice = createAction(
+  "[PageState/API] Load Current Device",
+  props<{ payload: string }>()
 );
 
 export const clearPageStates = createAction('[PageState/API] Clear PageStates');

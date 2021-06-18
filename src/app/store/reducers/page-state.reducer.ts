@@ -7,6 +7,7 @@ export const pageStatesFeatureKey = 'pageStates';
 
 export interface State extends EntityState<PageState> {
   // additional entities state properties
+  currentDevice: string;
 }
 
 export const adapter: EntityAdapter<PageState> = createEntityAdapter<
@@ -15,6 +16,7 @@ export const adapter: EntityAdapter<PageState> = createEntityAdapter<
 
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
+  currentDevice: '',
 });
 
 export const reducer = createReducer(
@@ -40,9 +42,10 @@ export const reducer = createReducer(
   on(PageStateActions.deletePageState, (state, action) =>
     adapter.removeOne(action.id, state)
   ),
-  on(PageStateActions.deletePageStates, (state, action) =>
-    adapter.removeMany(action.ids, state)
-  ),
+  on(PageStateActions.loadCurrentDevice, (state, action) => ({
+    ...state,
+    currentDevice: action.payload,
+  })),
   on(PageStateActions.loadPageStates, (state, action) =>
     adapter.setAll(action.pageStates, state)
   ),
@@ -55,3 +58,5 @@ export const {
   selectAll,
   selectTotal,
 } = adapter.getSelectors();
+
+export const getCurrentDeviceState = (state: State) => state.currentDevice;
