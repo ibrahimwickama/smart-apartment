@@ -36,3 +36,8 @@ export const getAgentInfo = createSelector(
   getPageState,
   fromPageStateReducer.getAgentInfoState
 );
+
+export const getPropertyInfo = createSelector(
+  getPageState,
+  fromPageStateReducer.getPropertyInfoState
+);

@@ -1,6 +1,11 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { PageState, NotificationPayload, AgentInfo } from '../models';
+import {
+  PageState,
+  NotificationPayload,
+  AgentInfo,
+  PropertyInfo,
+} from '../models';
 import * as PageStateActions from '../actions/page-state.actions';
 import { sanitizeApartmentListingPayload } from 'src/app/shared/helpers';
 
@@ -13,6 +18,7 @@ export interface State extends EntityState<PageState> {
   notification: NotificationPayload;
   notificationStatus: boolean;
   agentInfo: AgentInfo;
+  currentViewedProperty: {};
 }
 
 export const adapter: EntityAdapter<PageState> = createEntityAdapter<
@@ -32,6 +38,7 @@ export const initialState: State = adapter.getInitialState({
     splashMessage: '',
     customHeader: '',
   },
+  currentViewedProperty: {},
 });
 
 export const reducer = createReducer(
@@ -49,7 +56,11 @@ export const reducer = createReducer(
     ...state,
     notificationStatus: action.payload,
   })),
-  on(PageStateActions.addAgentListing, (state, action) =>
+  on(PageStateActions.updateCurrentPropertyInfo, (state, action) => ({
+    ...state,
+    currentViewedProperty: action.payload,
+  })),
+  on(PageStateActions.addAgentListings, (state, action) =>
     adapter.addMany(sanitizeApartmentListingPayload(action.payload.records), {
       ...state,
       loadingApartListings: false,
@@ -72,3 +83,4 @@ export const getApartmentListingsLoadingState = (state: State) =>
 export const getNotificationStatusState = (state: State) =>
   state.notificationStatus;
 export const getAgentInfoState = (state: State) => state.agentInfo;
+export const getPropertyInfoState = (state: State) => state.currentViewedProperty;

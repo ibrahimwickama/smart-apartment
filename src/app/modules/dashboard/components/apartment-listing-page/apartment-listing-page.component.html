@@ -11,12 +11,14 @@
   <div class="row w-100 mx-0 py-2 listing-item-header">
     <span class="w-100 mb-2 d-flex align-items-center">
       <label class="color-white d-flex align-items-center">
-        jlksjflksd
+        {{ (property$ | async)?.name }}
       </label>
       <mat-icon class="mx-2">public</mat-icon>
     </span>
 
-    <label class="w-100 color-white font-small"> skjdfksldd</label>
+    <label class="w-100 color-white font-small">
+      {{ (property$ | async)?.city }}
+    </label>
   </div>
 
 </div>
