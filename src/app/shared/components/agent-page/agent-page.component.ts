@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AppState } from '../../../store/reducers';
+import * as fromSelectors from '../../../store/selectors';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-agent-page',
@@ -6,7 +10,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./agent-page.component.css'],
 })
 export class AgentPageComponent implements OnInit {
-  constructor() {}
+  apartmentListing$: Observable<any>;
+  constructor(private store: Store<AppState>) {
+    this.apartmentListing$ = this.store.select(
+      fromSelectors.getApartmentListingData
+    );
+  }
 
   ngOnInit() {}
 

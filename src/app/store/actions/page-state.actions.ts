@@ -1,50 +1,28 @@
 import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
-import { PageState } from '../models/page-state.model';
+import { PageState, NotificationPayload, AgentListing } from '../models';
 
-export const loadPageStates = createAction(
-  '[PageState/API] Load PageStates',
-  props<{ pageStates: PageState[] }>()
+export const loadApartmentListings = createAction(
+  '[PageState/API] Load Apartments Listings'
 );
 
-export const addPageState = createAction(
-  '[PageState/API] Add PageState',
-  props<{ pageState: PageState }>()
+export const addAgentListing = createAction(
+  '[PageState/API] Add Agent Listings',
+  props<{ payload: AgentListing }>()
+);
+export const updateNotification = createAction(
+  '[PageState/API] Update Notification',
+  props<{ payload: NotificationPayload }>()
 );
 
-export const upsertPageState = createAction(
-  '[PageState/API] Upsert PageState',
-  props<{ pageState: PageState }>()
-);
-
-export const addPageStates = createAction(
-  '[PageState/API] Add PageStates',
-  props<{ pageStates: PageState[] }>()
-);
-
-export const upsertPageStates = createAction(
-  '[PageState/API] Upsert PageStates',
-  props<{ pageStates: PageState[] }>()
-);
-
-export const updatePageState = createAction(
-  '[PageState/API] Update PageState',
-  props<{ pageState: Update<PageState> }>()
-);
-
-export const updatePageStates = createAction(
-  '[PageState/API] Update PageStates',
-  props<{ pageStates: Update<PageState>[] }>()
-);
-
-export const deletePageState = createAction(
-  '[PageState/API] Delete PageState',
-  props<{ id: string }>()
+export const updateNotificationStatus = createAction(
+  '[PageState/API] Update Notification Status',
+  props<{ payload: boolean }>()
 );
 
 export const loadCurrentDevice = createAction(
-  "[PageState/API] Load Current Device",
+  '[PageState/API] Load Current Device',
   props<{ payload: string }>()
 );
 

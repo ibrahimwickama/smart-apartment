@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './store/reducers';
 import * as fromActions from './store/actions';
+import * as fromSelectors from './store/selectors';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +13,27 @@ import * as fromActions from './store/actions';
 export class AppComponent implements OnInit {
   showFiller = false;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>, private snackBar: MatSnackBar) {
+    this.store
+      .select(fromSelectors.getNotification)
+      .subscribe((notification) => {
+        // Trigger SnackaBar popUp view
+        if (notification.message) {
+          const snackColor =
+            notification.statusCode === 200
+              ? 'success-snackbar'
+              : 'danger-snackbar';
+          this.snackBar.open(notification.message, '', {
+            duration: 4000,
+            panelClass: [snackColor],
+          });
+        }
+      });
+  }
 
   ngOnInit() {
     this.detectCurrentDevice();
+    this.store.dispatch(fromActions.loadApartmentListings());
   }
   detectCurrentDevice() {
     const userAgent = navigator.userAgent;

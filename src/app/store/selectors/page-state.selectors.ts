@@ -7,17 +7,22 @@ export const getPageState = createSelector(
   (state: fromMainReducer.AppState) => state.pageState
 );
 
-// export const getCurrentDevice = createSelector(
-//     getPageState,
-//     fromPageStateReducer.getCurrentDeviceState
-// );
+export const getCurrentDevice = createSelector(
+  getPageState,
+  fromPageStateReducer.getCurrentDeviceState
+);
 
-// export const getNotification = createSelector(
-//     getPageState,
-//     fromPageStateReducer.getNotificationState
-// );
+export const getNotification = createSelector(
+  getPageState,
+  fromPageStateReducer.getNotificationState
+);
 
-// export const getNotificationStatus = createSelector(
-//     getPageState,
-//     fromPageStateReducer.getNotificationStatusState
-// );
+export const getNotificationStatus = createSelector(
+  getPageState,
+  fromPageStateReducer.getNotificationStatusState
+);
+
+export const getApartmentListingData = createSelector(
+  getPageState,
+  fromPageStateReducer.getAllApartmentListingDataState
+);

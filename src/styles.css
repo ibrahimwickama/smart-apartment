@@ -83,3 +83,19 @@ body {
 .font-weight-600 {
   font-weight: 600 !important;
 }
+
+.danger-snackbar {
+  z-index: 2050 !important;
+  color: #721c24 !important;
+  background-color: #f8d7da !important;
+}
+
+.success-snackbar {
+  z-index: 2050 !important;
+  color: #155724 !important;
+  background-color: #d4edda !important;
+}
+
+.success-font-color {
+  color: #28a745;
+}
