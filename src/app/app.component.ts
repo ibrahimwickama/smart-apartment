@@ -9,7 +9,7 @@ import * as fromActions from './store/actions';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'system-info';
+  showFiller = false;
 
   constructor(private store: Store<AppState>) {}
 
