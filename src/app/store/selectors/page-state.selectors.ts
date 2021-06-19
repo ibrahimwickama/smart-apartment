@@ -41,3 +41,8 @@ export const getPropertyInfo = createSelector(
   getPageState,
   fromPageStateReducer.getPropertyInfoState
 );
+
+export const getPropertyInfoLoading = createSelector(
+  getPageState,
+  fromPageStateReducer.getPropertyInfoLoadingState
+);

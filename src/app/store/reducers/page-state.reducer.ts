@@ -14,11 +14,12 @@ export const pageStatesFeatureKey = 'pageStates';
 export interface State extends EntityState<PageState> {
   // additional entities state properties
   currentDevice: string;
-  loadingApartListings: boolean;
+  loadingApartmentListings: boolean;
   notification: NotificationPayload;
   notificationStatus: boolean;
   agentInfo: AgentInfo;
   currentViewedProperty: {};
+  loadingPropertyInfo: boolean;
 }
 
 export const adapter: EntityAdapter<PageState> = createEntityAdapter<
@@ -28,7 +29,7 @@ export const adapter: EntityAdapter<PageState> = createEntityAdapter<
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
   currentDevice: '',
-  loadingApartListings: true,
+  loadingApartmentListings: false,
   notification: { message: '', statusCode: 0 },
   notificationStatus: false,
   agentInfo: {
@@ -39,6 +40,7 @@ export const initialState: State = adapter.getInitialState({
     customHeader: '',
   },
   currentViewedProperty: {},
+  loadingPropertyInfo: false,
 });
 
 export const reducer = createReducer(
@@ -46,6 +48,14 @@ export const reducer = createReducer(
   on(PageStateActions.loadCurrentDevice, (state, action) => ({
     ...state,
     currentDevice: action.payload,
+  })),
+  on(PageStateActions.loadApartmentListings, (state, action) => ({
+    ...state,
+    loadingApartmentListings: true,
+  })),
+  on(PageStateActions.loadPropertyInfo, (state, action) => ({
+    ...state,
+    loadingPropertyInfo: true,
   })),
   on(PageStateActions.updateNotification, (state, action) => ({
     ...state,
@@ -59,11 +69,12 @@ export const reducer = createReducer(
   on(PageStateActions.updateCurrentPropertyInfo, (state, action) => ({
     ...state,
     currentViewedProperty: action.payload,
+    loadingPropertyInfo: false,
   })),
   on(PageStateActions.addAgentListings, (state, action) =>
     adapter.addMany(sanitizeApartmentListingPayload(action.payload.records), {
       ...state,
-      loadingApartListings: false,
+      loadingApartmentListings: false,
       agentInfo: action.payload.agentInfo,
     })
   )
@@ -79,8 +90,11 @@ export const {
 export const getCurrentDeviceState = (state: State) => state.currentDevice;
 export const getNotificationState = (state: State) => state.notification;
 export const getApartmentListingsLoadingState = (state: State) =>
-  state.loadingApartListings;
+  state.loadingApartmentListings;
 export const getNotificationStatusState = (state: State) =>
   state.notificationStatus;
 export const getAgentInfoState = (state: State) => state.agentInfo;
-export const getPropertyInfoState = (state: State) => state.currentViewedProperty;
+export const getPropertyInfoState = (state: State) =>
+  state.currentViewedProperty;
+export const getPropertyInfoLoadingState = (state: State) =>
+  state.loadingPropertyInfo;

@@ -13,9 +13,13 @@ import { first } from 'rxjs/operators';
 })
 export class ApartmentListingPageComponent implements OnInit {
   property$: Observable<any>;
+  propertyInfoLoading$: Observable<boolean>;
 
   constructor(private store: Store<AppState>) {
     this.property$ = this.store.select(fromSelectors.getPropertyInfo);
+    this.propertyInfoLoading$ = this.store.select(
+      fromSelectors.getPropertyInfoLoading
+    );
   }
 
   ngOnInit() {

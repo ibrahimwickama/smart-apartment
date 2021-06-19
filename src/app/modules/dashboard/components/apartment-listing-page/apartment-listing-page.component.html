@@ -20,5 +20,16 @@
       {{ (property$ | async)?.city }}
     </label>
   </div>
+  <!-- Progressive Loader -->
+  <mat-progress-bar mode="indeterminate" class="mb-2 w-100" *ngIf="(propertyInfoLoading$ | async)">
+  </mat-progress-bar>
+  <!-- End of Progressive Loader -->
+
+  <div class="row mx-0 d-flex" *ngIf="!(propertyInfoLoading$ | async)">
+    <div class="col-sm-2 col-sm-3 p-1" *ngFor="let imagesurl of (property$ | async).photos | slice:0:3;">
+      <img [src]="imagesurl" alt="" class="app-item-image-on-list-view img-fluid object-fit-cover border-radius-6px">
+    </div>
+    <button mat-stroked-button class="w-auto my-1">{{ ((property$ | async)?.photos || []).length  }}+ photos</button>
+  </div>
 
 </div>
