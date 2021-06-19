@@ -77,7 +77,7 @@ export interface PropertyInfo {
   schoolsInfo: SchoolsInfo;
   petInfo: PetInfo;
   paidUtilities?: null[] | null;
-  floorplans?: FloorplansEntity[] | null;
+  floorplans?: Floorplans[] | null;
   highValueAmenities?: string[] | null;
   unitAmenities?: string[] | null;
   propertyAmenities?: string[] | null;
@@ -130,7 +130,7 @@ export interface PetInfo {
   breedRestriction: boolean;
   nonRefundableFee: number;
 }
-export interface FloorplansEntity {
+export interface Floorplans {
   floorplanID: number;
   bed: number;
   bath: number;

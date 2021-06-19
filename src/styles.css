@@ -162,3 +162,11 @@ body {
   max-width: 30rem;
   min-width: 30rem;
 }
+
+.text-capitalize {
+  text-transform: capitalize !important;
+}
+
+.amount-font {
+  color: #1976d2;
+}
