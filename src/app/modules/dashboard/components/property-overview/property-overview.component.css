@@ -1,0 +1,14 @@
+.panel-accordin-border {
+  border-radius: 0px !important;
+  box-shadow: 0 0px 0px 0 rgba(0, 0, 0, .15);
+  min-height: 48px;
+}
+
+.container-options-item {
+  display: flex;
+  padding: 11px 10px 11px 0;
+  align-self: flex-start;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 50%;
+}

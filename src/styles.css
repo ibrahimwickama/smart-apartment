@@ -112,6 +112,10 @@ body {
   font-weight: 600 !important;
 }
 
+.font-weight-400 {
+  font-weight: 400 !important;
+}
+
 .danger-snackbar {
   z-index: 2050 !important;
   color: #721c24 !important;
