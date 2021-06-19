@@ -12,10 +12,10 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
   },
-  {
-    path: 'apartment',
-    component: ApartmentListingComponent,
-  },
+  // {
+  //   path: 'apartment',
+  //   component: ApartmentListingComponent,
+  // },
 ];
 
 @NgModule({
