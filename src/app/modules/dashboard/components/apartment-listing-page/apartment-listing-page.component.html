@@ -40,10 +40,9 @@
         <app-property-plan [floorplans]="(property$ | async)?.floorplans"></app-property-plan>
       </mat-tab>
       <mat-tab label="Overview">
-
+        <app-property-overview [property]="(property$ | async)"></app-property-overview>
       </mat-tab>
     </mat-tab-group>
   </div>
-
 
 </div>
