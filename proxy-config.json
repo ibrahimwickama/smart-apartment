@@ -1,0 +1,12 @@
+{
+  "/api": {
+    "target": "https://app.smartapartmentdata.com",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/": {
+    "target": "https://app.smartapartmentdata.com",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

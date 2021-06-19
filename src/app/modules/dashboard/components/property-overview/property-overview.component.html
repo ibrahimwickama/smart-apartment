@@ -1,0 +1,109 @@
+<div class="w-100">
+  <mat-list>
+    <mat-list-item>
+      <mat-icon class="amount-font">pets</mat-icon>
+      <label class="mx-3" *ngIf="property?.petInfo?.allowed">
+        {{ property?.petInfo?.breedRestriction ? 'No Aggressive Breeds' : 'Yes Aggressive Breeds' }}
+        {{ property?.petInfo?.limit }} Pets Max,
+        {{ property?.petInfo?.weight }} lbs,
+        ${{ property?.petInfo?.extraRent }}/month extra,
+        ${{ property?.petInfo?.nonRefundableFee }} non-refundable deposit
+      </label>
+      <label class="mx-3" *ngIf="!property?.petInfo?.allowed">
+        No pets allowed
+      </label>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon class="amount-font">place</mat-icon>
+      <label class="mx-3">
+        {{ property?.neighborhood }}
+      </label>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon class="amount-font">local_parking</mat-icon>
+      <label class="mx-3">
+        {{ property?.parking.reserved ? 'Reserved, ' : '' }}
+        {{ property?.parking.covered ? 'Covered, ' : '' }}
+        {{ property?.parking.garage ? 'Garage, ' : '' }}
+        {{ property?.parking.detached ? 'Detached, ' : '' }} Parking
+      </label>
+    </mat-list-item>
+    <mat-accordion>
+      <mat-expansion-panel class="panel-accordin-border">
+        <mat-expansion-panel-header class="px-0 mx-1 mt-3">
+          <mat-panel-title class="mx-3">
+            <mat-icon class="amount-font">school</mat-icon>
+            <label class="mx-3 font-weight-400"> {{ property?.schoolsInfo?.district }} School District </label>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <!-- panel content here  -->
+        <mat-list>
+          <mat-list-item class="text-muted" *ngIf="property?.schoolsInfo?.high">
+            <mat-icon>school</mat-icon>
+            <label class="mx-3">{{ property?.schoolsInfo?.high }} High School</label>
+          </mat-list-item>
+          <mat-list-item class="text-muted" *ngIf="property?.schoolsInfo?.middle">
+            <mat-icon>school</mat-icon>
+            <label class="mx-3">{{ property?.schoolsInfo?.middle }} Middle School</label>
+          </mat-list-item>
+          <mat-list-item class="text-muted" *ngIf="property?.schoolsInfo?.intermediate">
+            <mat-icon>school</mat-icon>
+            <label class="mx-3">{{ property?.schoolsInfo?.intermediate }} Intermediate School</label>
+          </mat-list-item>
+          <mat-list-item class="text-muted" *ngIf="property?.schoolsInfo?.elementry">
+            <mat-icon>school</mat-icon>
+            <label class="mx-3">{{ property?.schoolsInfo?.elementry }} Elementry School</label>
+          </mat-list-item>
+        </mat-list>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <mat-list-item class="mt-2">
+      <mat-icon class="amount-font">receipt</mat-icon>
+      <label class="mx-3">
+        {{ property?.appFee}} App fee. <br>
+        {{ property?.adminFee }} Admin fee.
+      </label>
+    </mat-list-item>
+    <mat-list-item class="mt-2">
+      <mat-icon class="amount-font">receipt</mat-icon>
+      <label class="mx-3">
+        Built {{ property?.yearBuilt }} <br>
+        Renovated {{ property?.yearRenovated }}
+      </label>
+    </mat-list-item>
+  </mat-list>
+
+  <mat-divider class="my-4"></mat-divider>
+  <label class="w-100 text-muted"> HIGH-VALUE amenities</label>
+  <div class="row w-100 mx-0">
+    <div class="col-sm-6 p-1" *ngFor="let item of property.highValueAmenities">
+      <div class="container-options-item">
+        <mat-icon>blur_on</mat-icon>
+        <label class="mx-2"> {{ item }} </label>
+      </div>
+    </div>
+  </div>
+
+  <mat-divider class="my-4"></mat-divider>
+  <label class="w-100 text-muted"> COMMUNITY FEATURES </label>
+  <div class="row w-100 mx-0">
+    <div class="col-sm-6 p-1" *ngFor="let item of property.propertyAmenities">
+      <div class="container-options-item">
+        <mat-icon>blur_on</mat-icon>
+        <label class="mx-2"> {{ item }} </label>
+      </div>
+    </div>
+  </div>
+
+  <mat-divider class="my-4"></mat-divider>
+  <label class="w-100 text-muted"> UNIT OPTIONS </label>
+  <div class="row w-100 mx-0">
+    <div class="col-sm-6 p-1" *ngFor="let item of property.unitAmenities">
+      <div class="container-options-item">
+        <mat-icon>blur_on</mat-icon>
+        <label class="mx-2"> {{ item }} </label>
+      </div>
+    </div>
+  </div>
+
+</div>

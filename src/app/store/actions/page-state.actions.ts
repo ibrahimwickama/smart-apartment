@@ -1,51 +1,39 @@
 import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
-import { PageState } from '../models/page-state.model';
+import { PageState, NotificationPayload, AgentListing, PropertyInfo } from '../models';
 
-export const loadPageStates = createAction(
-  '[PageState/API] Load PageStates',
-  props<{ pageStates: PageState[] }>()
+export const loadApartmentListings = createAction(
+  '[PageState/API] Load Apartments Listings'
 );
 
-export const addPageState = createAction(
-  '[PageState/API] Add PageState',
-  props<{ pageState: PageState }>()
+export const addAgentListings = createAction(
+  '[PageState/API] Add Agent Listings',
+  props<{ payload: AgentListing }>()
 );
 
-export const upsertPageState = createAction(
-  '[PageState/API] Upsert PageState',
-  props<{ pageState: PageState }>()
+export const loadPropertyInfo = createAction(
+  '[PageState/API] Load Property Information'
 );
 
-export const addPageStates = createAction(
-  '[PageState/API] Add PageStates',
-  props<{ pageStates: PageState[] }>()
+export const updateCurrentPropertyInfo = createAction(
+  '[PageState/API] Current Property Info',
+  props<{ payload: PropertyInfo }>()
 );
 
-export const upsertPageStates = createAction(
-  '[PageState/API] Upsert PageStates',
-  props<{ pageStates: PageState[] }>()
+export const updateNotification = createAction(
+  '[PageState/API] Update Notification',
+  props<{ payload: NotificationPayload }>()
 );
 
-export const updatePageState = createAction(
-  '[PageState/API] Update PageState',
-  props<{ pageState: Update<PageState> }>()
+export const updateNotificationStatus = createAction(
+  '[PageState/API] Update Notification Status',
+  props<{ payload: boolean }>()
 );
 
-export const updatePageStates = createAction(
-  '[PageState/API] Update PageStates',
-  props<{ pageStates: Update<PageState>[] }>()
-);
-
-export const deletePageState = createAction(
-  '[PageState/API] Delete PageState',
-  props<{ id: string }>()
-);
-
-export const deletePageStates = createAction(
-  '[PageState/API] Delete PageStates',
-  props<{ ids: string[] }>()
+export const loadCurrentDevice = createAction(
+  '[PageState/API] Load Current Device',
+  props<{ payload: string }>()
 );
 
 export const clearPageStates = createAction('[PageState/API] Clear PageStates');

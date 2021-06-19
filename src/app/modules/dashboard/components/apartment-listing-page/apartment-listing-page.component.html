@@ -1,0 +1,55 @@
+<div class="container-fluid px-0 overflow-x-hidden">
+  <div class="w-100 sticky-top" [ngClass]="{'sticky-top-panel': !(propertyInfoLoading$ | async) }">
+    <div class="row d-flex justify-content-between align-items-center w-100 mx-0 px-2 company-title-section">
+      <button mat-icon-button>
+        <mat-icon class="color-white font-x-large" matTooltip="Back to results" [routerLink]="'/'">arrow_backward
+        </mat-icon>
+      </button>
+      <button mat-fab class="favourite-icon-bg-color">
+        <mat-icon>favorite</mat-icon>
+      </button>
+    </div>
+    <div class="row w-100 mx-0 py-2 listing-item-header">
+      <span class="w-100 mb-2 d-flex align-items-center">
+        <label class="color-white d-flex align-items-center">
+          {{ (property$ | async)?.name }}
+        </label>
+        <mat-icon class="mx-2">public</mat-icon>
+      </span>
+
+      <label class="w-100 color-white font-small">
+        {{ (property$ | async)?.city }}
+      </label>
+    </div>
+  </div>
+
+  <!-- Progressive Loader -->
+  <mat-progress-bar mode="indeterminate" class="mb-2 w-100" *ngIf="(propertyInfoLoading$ | async)">
+  </mat-progress-bar>
+  <!-- End of Progressive Loader -->
+
+  <!-- Image slide section -->
+  <div class="row mx-0 d-flex listing-margin-top" *ngIf="!(propertyInfoLoading$ | async)">
+    <div class="col-sm-2 col-sm-3 p-1" *ngFor="let imagesurl of (property$ | async).photos | slice:0:3;">
+      <img [src]="imagesurl" alt="" class="app-item-image-on-list-view img-fluid object-fit-cover border-radius-6px">
+    </div>
+    <button mat-stroked-button class="w-auto my-1">{{ ((property$ | async)?.photos || []).length  }}+ photos</button>
+  </div>
+  <!-- Image slide section -->
+
+  <div class="row w-100 mx-0" *ngIf="!(propertyInfoLoading$ | async)">
+    <mat-tab-group mat-align-tabs="center">
+      <mat-tab label="Plans">
+        <div class="w-100 mt-4">
+          <app-property-plan [floorplans]="(property$ | async)?.floorplans"></app-property-plan>
+        </div>
+      </mat-tab>
+      <mat-tab label="Overview">
+        <div class="w-100 mt-4">
+          <app-property-overview [property]="(property$ | async)"></app-property-overview>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+</div>

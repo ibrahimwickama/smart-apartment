@@ -1,0 +1,84 @@
+<div class="container-fluid px-0 overflow-x-hidden">
+  <!-- sticky top section  -->
+  <div class="w-100 sticky-top" [ngClass]="{'sticky-top-panel': !(apartmentListingsLoading$ | async) }">
+    <div class="row d-flex align-items-center w-100 mx-0 px-2 company-title-section">
+      {{ (agentInfo$ | async)?.firstname }} {{ (agentInfo$ | async)?.lastname }} | {{ (agentInfo$ | async)?.company }}
+    </div>
+    <!-- filters section -->
+    <mat-accordion class="filter-accordin">
+      <mat-expansion-panel class="filter-accordin filter-bg">
+        <mat-expansion-panel-header class="appartment-filters-section filter-header-view">
+          <mat-panel-title class="">
+            Filters
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <!-- filters contents -->
+        <div class="row d-block w-100 mx-0 pb-2 appartment-filters-section">
+          <label class="pb-2">Rents</label>
+          <div class="w-100 d-flex justify-content-between">
+            <div class="card w-75 d-flex align-items-center">
+              <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1000" step="1000" min="0" max="100000"
+                aria-label="units"></mat-slider>
+            </div>
+            <button mat-stroked-button class="done-button" color="primary">DONE</button>
+          </div>
+
+          <mat-divider class="my-4"></mat-divider>
+
+          <label class="pb-2">Bedrooms</label>
+          <div class="w-100 d-flex justify-content-between">
+            <div class="card w-75 d-flex align-items-center color-black">
+              <section class="my-auto">
+                <mat-checkbox class="mx-1">Studio</mat-checkbox>
+                <mat-checkbox class="mx-1">1 Bed</mat-checkbox>
+                <mat-checkbox class="mx-1">2 Bed</mat-checkbox>
+                <mat-checkbox class="mx-1">3 Bed</mat-checkbox>
+              </section>
+            </div>
+            <button mat-stroked-button class="done-button" color="primary">DONE</button>
+          </div>
+
+        </div>
+        <!-- filters contents -->
+      </mat-expansion-panel>
+    </mat-accordion>
+    <!-- filters section -->
+
+    <!-- Progressive Loader -->
+    <mat-progress-bar mode="indeterminate" class="mb-2 w-100" *ngIf="(apartmentListingsLoading$ | async)">
+    </mat-progress-bar>
+    <!-- End of Progressive Loader -->
+  </div>
+  <!-- sticky top section  -->
+
+
+  <div class="row w-100 mx-0 px-2 mb-3 overflow-x-hidden listing-margin-top">
+    <div matRipple class="card px-0 my-2 cursor-pointer"
+      *ngFor="let listing of (apartmentListing$ | async); trackBy: trackByFn;" [routerLink]="'/dashboard/apartment'"
+      [queryParams]="{ propertyid: listing?.propertyID }">
+      <div class="row w-100 mx-0 d-flex justify-content-between">
+        <div class="col-sm-8">
+          <label class="w-100 pt-1 mb-0 font-bold d-flex align-items-center">
+            <mat-icon class="favourite-icon-color mr-2">favorite</mat-icon>
+            {{ listing?.name }}
+          </label>
+          <label class="text-muted font-small"> {{ listing?.streetAddress }}, {{ listing?.city }}</label>
+          <mat-chip-list class="w-100">
+            <mat-chip class="text-muted" *ngFor="let floorPlan of listing.floorplans" [matTooltip]="floorPlan.type">
+              $ {{ floorPlan.price | commaSeparator }}
+            </mat-chip>
+          </mat-chip-list>
+          <label class="w-100 font-small text-muted"> {{ (listing?.highValueAmenities || []).length }} High value
+            amenities</label>
+        </div>
+        <div class="col-sm-4 px-0 d-flex justify-content-end">
+          <div class="app-item-icon-loader">
+            <img [src]="listing?.photo" alt=""
+              class="app-item-image-on-list-view img-fluid object-fit-cover border-radius-6px">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
