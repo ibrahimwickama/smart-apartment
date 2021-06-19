@@ -59,7 +59,7 @@
       <div class="row w-100 mx-0 d-flex justify-content-between">
         <div class="col-sm-8">
           <label class="w-100 pt-1 mb-0 font-bold d-flex align-items-center">
-            <mat-icon class="favourite-icon-color mr-2">favorite</mat-icon>
+            <mat-icon class="favourite-icon-color mr-2" *ngIf="listing.favorite">favorite</mat-icon>
             {{ listing?.name }}
           </label>
           <label class="text-muted font-small"> {{ listing?.streetAddress }}, {{ listing?.city }}</label>
