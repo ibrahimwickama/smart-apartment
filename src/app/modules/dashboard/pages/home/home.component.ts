@@ -11,9 +11,17 @@ import * as fromSelectors from '../../../../store/selectors';
 })
 export class HomeComponent implements OnInit {
   routerParams$: Observable<any>;
+  apartmentListingsLoading$: Observable<boolean>;
+  propertyInfoLoading$: Observable<boolean>;
 
   constructor(private store: Store<AppState>) {
     this.routerParams$ = this.store.select(fromSelectors.getRouterParamsState);
+    this.apartmentListingsLoading$ = this.store.select(
+      fromSelectors.getApartmentListingsLoading
+    );
+    this.propertyInfoLoading$ = this.store.select(
+      fromSelectors.getPropertyInfoLoading
+    );
   }
 
   ngOnInit() {}

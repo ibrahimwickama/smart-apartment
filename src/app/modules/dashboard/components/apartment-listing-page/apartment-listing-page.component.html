@@ -2,7 +2,8 @@
   <div class="w-100 sticky-top" [ngClass]="{'sticky-top-panel': !(propertyInfoLoading$ | async) }">
     <div class="row d-flex justify-content-between align-items-center w-100 mx-0 px-2 company-title-section">
       <button mat-icon-button>
-        <mat-icon class="color-white font-x-large" matTooltip="Back to results" [routerLink]="'/'">arrow_backward
+        <mat-icon class="color-white font-x-large" matTooltip="Back to results" [routerLink]="'/'"
+          (click)="backToListings($event)">arrow_backward
         </mat-icon>
       </button>
       <button mat-fab class="favourite-icon-bg-color">

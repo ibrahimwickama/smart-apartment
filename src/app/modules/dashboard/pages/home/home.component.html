@@ -13,7 +13,7 @@
   <!-- center-contents -->
   <div class="d-flex justify-content-center align-items-center h-100">
     <!-- map-content -->
-    <div class="w-100">
+    <div class="w-100" *ngIf="!(apartmentListingsLoading$ | async) || !(propertyInfoLoading$ | async)">
       <app-map-view></app-map-view>
     </div>
 

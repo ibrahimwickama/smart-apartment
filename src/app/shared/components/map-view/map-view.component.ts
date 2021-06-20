@@ -1,10 +1,14 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/reducers';
+import * as fromActions from '../../../store/actions';
+import * as fromSelectors from '../../../store/selectors';
 import {
   mapboxToken,
   mapTilerToken,
 } from '../../../../assets/configurations/mapbox';
-declare var mapboxgl: any;
-// declare var maplibregl: any;
+declare let mapboxgl: any;
 
 @Component({
   selector: 'app-map-view',
@@ -17,19 +21,24 @@ export class MapViewComponent implements OnInit, AfterViewInit {
   style =
     'https://api.maptiler.com/maps/eef16200-c4cc-4285-9370-c71ca24bb42d/style.json?key=CH1cYDfxBV9ZBu1lHGqh';
   // style = `https://api.maptiler.com/maps/streets/style.json?key=${mapTilerToken}`;
-  lat = 45.899977;
-  lng = 6.172652;
-  zoom = 12;
+  zoom = 8;
 
-  constructor() {
+  mapPins: any = [];
+
+  constructor(private store: Store<AppState>) {
     mapboxgl.accessToken = mapboxToken;
-    // maplibregl.accessToken = mapboxToken;
+    this.store.select(fromSelectors.getMapPins).subscribe((mapPins) => {
+      this.mapPins = mapPins;
+      if (mapPins.length) {
+        this.buildMap();
+      }
+    });
   }
 
   ngOnInit() {}
 
   ngAfterViewInit() {
-    this.buildMap();
+    // this.buildMap();
   }
 
   // buildMap() {
@@ -45,19 +54,19 @@ export class MapViewComponent implements OnInit, AfterViewInit {
   // }
 
   buildMap() {
-    this.map = new mapboxgl.Map({
+    let map = new mapboxgl.Map({
       container: 'map',
       style: this.style,
       zoom: this.zoom,
-      center: [this.lng, this.lat],
+      // center: [this.lng, this.lat],
     });
 
     // add markers to map
-    // geojson.features.forEach(function (marker) {
-    //   // make a marker for each feature and add it to the map
-    //   new mapboxgl.Marker()
-    //     .setLngLat(marker.geometry.coordinates)
-    //     .addTo(this.map);
-    // });
+
+    this.mapPins.forEach(function (markerCoordinates) {
+      // make a marker for each feature and add it to the map
+      new mapboxgl.Marker().setLngLat(markerCoordinates).addTo(map);
+    });
+    this.map = map;
   }
 }
