@@ -95,6 +95,13 @@ export const reducer = createReducer(
       ...state.currentViewedProperty,
       favorite: !state.currentViewedProperty.favorite,
     },
+    entities: {
+      ...state.entities,
+      [state.currentViewedProperty.propertyID]: {
+        ...state.entities[state.currentViewedProperty.propertyID],
+        favorite: !state?.currentViewedProperty?.favorite,
+      },
+    },
   })),
   on(PageStateActions.addAgentListings, (state, action) =>
     adapter.addMany(sanitizeApartmentListingPayload(action.payload.records), {
