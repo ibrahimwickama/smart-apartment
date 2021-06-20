@@ -2,6 +2,19 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
 
+## Task requirements
+
+> - Utilize ngRx, for your Store
+> - Implement as many use cases as you are able to. It is up to you to decide how far you wish to take it. Obviously, the goal is to showcase your abilities. You can start with the following
+>   > - Load pins on map ✅
+>   > - Zoom in/out specific pin ✅
+>   > - Change/Replace pins on map on user-selections ✅
+>   > - Auto Zoom to center map on a group of pins ✅
+
+## Extra features
+
+> - Added tooltipe popup on markers for easy marker detail idenfitication
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
