@@ -52,54 +52,82 @@ export class MapViewComponent implements OnInit, AfterViewInit {
         container: 'map',
         style: this.style,
         zoom: 12.7,
+        center: this.getCenterCoordinates(),
       });
 
       // add markers to map
       const bounds = [];
-      this.mapPins.forEach(function (markerCoordinates) {
+      this.mapPins.forEach(function (marker) {
         // make a marker for each feature and add it to the map
         bounds.push(
-          new mapboxgl.LngLat(markerCoordinates[0], markerCoordinates[1])
+          new mapboxgl.LngLat(marker.coordinates[0], marker.coordinates[1])
         );
-        new mapboxgl.Marker().setLngLat(markerCoordinates).addTo(map);
+        // create custom marker html
+        var el = document.createElement('div');
+        el.className = 'marker';
+        el.id = marker?.id;
+        el.style.backgroundImage = marker.favorite
+          ? 'url(/assets/svg/pin-red-heart.svg)'
+          : 'url(/assets/svg/pin-red.svg)';
+        el.style.width = marker.favorite ? '52px' : '32px';
+        el.style.height = marker.favorite ? '52px' : '32px';
+        el.style.backgroundSize = '100%';
+        // create custom marker html
+        const markerElement = new mapboxgl.Marker(el)
+          .setLngLat(marker.coordinates)
+          .addTo(map);
+        markerElement.getElement().addEventListener('click', (e) => {
+          const propertyId = event?.srcElement['id'] || '';
+          window.location.href = `#/dashboard/home?view=property&propertyid=${propertyId}`;
+        });
       });
 
-      let llb = new mapboxgl.LngLatBounds(...bounds);
-      const centerCoordinates = llb.getCenter();
-      map.fitBounds(llb);
-      map.flyTo({
-        center: centerCoordinates,
-        essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-      });
       this.map = map;
     } catch (e) {}
   }
 
   zoomToMarker() {
+    const coordinates = this.mapPins[0].coordinates || [];
     try {
       let map = new mapboxgl.Map({
         container: 'map',
         style: this.style,
         zoom: 16,
+        center: coordinates,
       });
 
       // add markers to map
-      this.mapPins.forEach(function (markerCoordinates) {
+      this.mapPins.forEach(function (marker) {
         // make a marker for each feature and add it to the map
-        new mapboxgl.Marker().setLngLat(markerCoordinates).addTo(map);
+        // create custom marker html
+        var el = document.createElement('div');
+        el.className = 'marker';
+        el.id = marker?.id;
+        el.style.backgroundImage = marker.favorite
+          ? 'url(/assets/svg/pin-red-heart.svg)'
+          : 'url(/assets/svg/pin-red.svg)';
+        el.style.width = '52px';
+        el.style.height = '52px';
+        el.style.backgroundSize = '100%';
+        // create custom marker html
+
+        new mapboxgl.Marker({ element: el })
+          .setLngLat(marker.coordinates)
+          .addTo(map);
       });
-
-      let sw = new mapboxgl.LngLat(this.mapPins[0][0], this.mapPins[0][1]);
-      let ne = new mapboxgl.LngLat(this.mapPins[0][0], this.mapPins[0][1]);
-      let llb = new mapboxgl.LngLatBounds(sw, ne);
-
-      map.fitBounds(llb);
-      map.flyTo({
-        center: this.mapPins[0],
-        essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-      });
-
       this.map = map;
     } catch (e) {}
+  }
+
+  getCenterCoordinates() {
+    const bounds = [];
+    this.mapPins.forEach(function (marker) {
+      bounds.push(
+        new mapboxgl.LngLat(marker.coordinates[0], marker.coordinates[1])
+      );
+    });
+    let llb = new mapboxgl.LngLatBounds(...bounds);
+    const centerCoordinates = llb.getCenter();
+    return centerCoordinates;
   }
 }
