@@ -2,11 +2,15 @@
   <div class="w-100 sticky-top" [ngClass]="{'sticky-top-panel': !(propertyInfoLoading$ | async) }">
     <div class="row d-flex justify-content-between align-items-center w-100 mx-0 px-2 company-title-section">
       <button mat-icon-button>
-        <mat-icon class="color-white font-x-large" matTooltip="Back to results" [routerLink]="'/'">arrow_backward
+        <mat-icon class="color-white font-x-large" matTooltip="Back to results" [routerLink]="'/'"
+          (click)="backToListings($event)">arrow_backward
         </mat-icon>
       </button>
-      <button mat-fab class="favourite-icon-bg-color">
-        <mat-icon>favorite</mat-icon>
+      <button mat-fab (click)="updatePropertyFavorite()"
+        [ngClass]="{'favourite-icon-bg-color': (property$ | async).favorite, 'bg-white': !(property$ | async).favorite}">
+        <mat-icon
+          [ngClass]="{'color-white': (property$ | async).favorite, 'color-black': !(property$ | async).favorite}">
+          favorite</mat-icon>
       </button>
     </div>
     <div class="row w-100 mx-0 py-2 listing-item-header">
@@ -14,7 +18,11 @@
         <label class="color-white d-flex align-items-center">
           {{ (property$ | async)?.name }}
         </label>
-        <mat-icon class="mx-2">public</mat-icon>
+        <a class="mx-2 color-white d-flex align-items-center" href="https://my.smartapartmentdata.com" target="_blank"
+          rel="noopener" title="Link">
+          <mat-icon>public</mat-icon>
+        </a>
+
       </span>
 
       <label class="w-100 color-white font-small">

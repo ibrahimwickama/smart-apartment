@@ -25,4 +25,12 @@ export class ApartmentListingPageComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(fromActions.loadPropertyInfo());
   }
+
+  backToListings(e) {
+    this.store.dispatch(fromActions.resetMapPins());
+  }
+
+  updatePropertyFavorite() {
+    this.store.dispatch(fromActions.updatePropertyInfoFavorite());
+  }
 }

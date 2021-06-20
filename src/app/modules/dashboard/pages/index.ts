@@ -1,9 +1,5 @@
 import { HomeComponent } from './home/home.component';
-import { ApartmentListingComponent } from './apartment-listing/apartment-listing.component';
 
-export const dashboardPagesComponents: any[] = [
-  HomeComponent,
-  ApartmentListingComponent,
-];
+export const dashboardPagesComponents: any[] = [HomeComponent];
 
-export { HomeComponent, ApartmentListingComponent };
+export { HomeComponent };

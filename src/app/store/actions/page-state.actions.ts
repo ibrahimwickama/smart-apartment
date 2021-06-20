@@ -1,7 +1,12 @@
 import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
-import { PageState, NotificationPayload, AgentListing, PropertyInfo } from '../models';
+import {
+  PageState,
+  NotificationPayload,
+  AgentListing,
+  PropertyInfo,
+} from '../models';
 
 export const loadApartmentListings = createAction(
   '[PageState/API] Load Apartments Listings'
@@ -16,10 +21,16 @@ export const loadPropertyInfo = createAction(
   '[PageState/API] Load Property Information'
 );
 
+export const updatePropertyInfoFavorite = createAction(
+  '[PageState/API] Updae Property Information Favorite'
+);
+
 export const updateCurrentPropertyInfo = createAction(
   '[PageState/API] Current Property Info',
   props<{ payload: PropertyInfo }>()
 );
+
+export const resetMapPins = createAction('[PageState/API] Reset Map Pins');
 
 export const updateNotification = createAction(
   '[PageState/API] Update Notification',

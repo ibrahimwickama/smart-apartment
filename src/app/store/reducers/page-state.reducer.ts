@@ -7,7 +7,12 @@ import {
   PropertyInfo,
 } from '../models';
 import * as PageStateActions from '../actions/page-state.actions';
-import { sanitizeApartmentListingPayload } from 'src/app/shared/helpers';
+import {
+  sanitizeApartmentListingPayload,
+  getMapPinsFromListingRecords,
+  getMapPinFromPropertyInfo,
+  resetMapPinsInformation,
+} from '../../shared/helpers';
 
 export const pageStatesFeatureKey = 'pageStates';
 
@@ -18,8 +23,9 @@ export interface State extends EntityState<PageState> {
   notification: NotificationPayload;
   notificationStatus: boolean;
   agentInfo: AgentInfo;
-  currentViewedProperty: {};
+  currentViewedProperty: any;
   loadingPropertyInfo: boolean;
+  mapPins: any;
 }
 
 export const adapter: EntityAdapter<PageState> = createEntityAdapter<
@@ -41,6 +47,7 @@ export const initialState: State = adapter.getInitialState({
   },
   currentViewedProperty: {},
   loadingPropertyInfo: false,
+  mapPins: [],
 });
 
 export const reducer = createReducer(
@@ -66,14 +73,40 @@ export const reducer = createReducer(
     ...state,
     notificationStatus: action.payload,
   })),
+  on(PageStateActions.resetMapPins, (state, action) => ({
+    ...state,
+    mapPins: resetMapPinsInformation(state.entities),
+  })),
   on(PageStateActions.updateCurrentPropertyInfo, (state, action) => ({
     ...state,
     currentViewedProperty: action.payload,
+    mapPins: getMapPinFromPropertyInfo(action.payload),
     loadingPropertyInfo: false,
+  })),
+  on(PageStateActions.updatePropertyInfoFavorite, (state, action) => ({
+    ...state,
+    mapPins: [
+      {
+        ...state.mapPins[0],
+        favorite: !state.mapPins[0].favorite,
+      },
+    ],
+    currentViewedProperty: {
+      ...state.currentViewedProperty,
+      favorite: !state.currentViewedProperty.favorite,
+    },
+    entities: {
+      ...state.entities,
+      [state.currentViewedProperty.propertyID]: {
+        ...state.entities[state.currentViewedProperty.propertyID],
+        favorite: !state?.currentViewedProperty?.favorite,
+      },
+    },
   })),
   on(PageStateActions.addAgentListings, (state, action) =>
     adapter.addMany(sanitizeApartmentListingPayload(action.payload.records), {
       ...state,
+      mapPins: getMapPinsFromListingRecords(action.payload.records),
       loadingApartmentListings: false,
       agentInfo: action.payload.agentInfo,
     })
@@ -93,6 +126,7 @@ export const getApartmentListingsLoadingState = (state: State) =>
   state.loadingApartmentListings;
 export const getNotificationStatusState = (state: State) =>
   state.notificationStatus;
+export const getMapPinstate = (state: State) => state.mapPins;
 export const getAgentInfoState = (state: State) => state.agentInfo;
 export const getPropertyInfoState = (state: State) =>
   state.currentViewedProperty;
