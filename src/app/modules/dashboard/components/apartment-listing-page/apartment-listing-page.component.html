@@ -6,8 +6,11 @@
           (click)="backToListings($event)">arrow_backward
         </mat-icon>
       </button>
-      <button mat-fab class="favourite-icon-bg-color">
-        <mat-icon>favorite</mat-icon>
+      <button mat-fab (click)="updatePropertyFavorite()"
+        [ngClass]="{'favourite-icon-bg-color': (property$ | async).favorite, 'bg-white': !(property$ | async).favorite}">
+        <mat-icon
+          [ngClass]="{'color-white': (property$ | async).favorite, 'color-black': !(property$ | async).favorite}">
+          favorite</mat-icon>
       </button>
     </div>
     <div class="row w-100 mx-0 py-2 listing-item-header">

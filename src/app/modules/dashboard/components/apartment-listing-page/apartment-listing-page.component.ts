@@ -29,4 +29,8 @@ export class ApartmentListingPageComponent implements OnInit {
   backToListings(e) {
     this.store.dispatch(fromActions.resetMapPins());
   }
+
+  updatePropertyFavorite() {
+    this.store.dispatch(fromActions.updatePropertyInfoFavorite());
+  }
 }

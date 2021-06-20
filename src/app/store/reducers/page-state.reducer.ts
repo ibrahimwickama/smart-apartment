@@ -23,7 +23,7 @@ export interface State extends EntityState<PageState> {
   notification: NotificationPayload;
   notificationStatus: boolean;
   agentInfo: AgentInfo;
-  currentViewedProperty: {};
+  currentViewedProperty: any;
   loadingPropertyInfo: boolean;
   mapPins: any;
 }
@@ -82,6 +82,19 @@ export const reducer = createReducer(
     currentViewedProperty: action.payload,
     mapPins: getMapPinFromPropertyInfo(action.payload),
     loadingPropertyInfo: false,
+  })),
+  on(PageStateActions.updatePropertyInfoFavorite, (state, action) => ({
+    ...state,
+    mapPins: [
+      {
+        ...state.mapPins[0],
+        favorite: !state.mapPins[0].favorite,
+      },
+    ],
+    currentViewedProperty: {
+      ...state.currentViewedProperty,
+      favorite: !state.currentViewedProperty.favorite,
+    },
   })),
   on(PageStateActions.addAgentListings, (state, action) =>
     adapter.addMany(sanitizeApartmentListingPayload(action.payload.records), {
