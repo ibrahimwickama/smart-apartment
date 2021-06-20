@@ -44,21 +44,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {}
 
-  ngAfterViewInit() {
-    // this.buildMap();
-  }
-
-  // buildMap() {
-  //   this.map = new mapboxgl.Map({
-  //     container: 'map',
-  //     style: this.style,
-  //     zoom: this.zoom,
-  //     center: [this.lng, this.lat],
-  //   });
-
-  //   // if you want to add navigation controls
-  //   // this.map.addControl(new mapboxgl.NavigationControl());
-  // }
+  ngAfterViewInit() {}
 
   buildMap() {
     try {
@@ -66,7 +52,6 @@ export class MapViewComponent implements OnInit, AfterViewInit {
         container: 'map',
         style: this.style,
         zoom: 12.7,
-        // center: [this.lng, this.lat],
       });
 
       // add markers to map
