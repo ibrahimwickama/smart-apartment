@@ -21,12 +21,9 @@ declare let mapboxgl: any;
   styleUrls: ['./map-view.component.css'],
 })
 export class MapViewComponent implements OnInit, AfterViewInit {
-  // map: mapboxgl.Map;
   map: any;
   style =
     'https://api.maptiler.com/maps/eef16200-c4cc-4285-9370-c71ca24bb42d/style.json?key=CH1cYDfxBV9ZBu1lHGqh';
-  // style = `https://api.maptiler.com/maps/streets/style.json?key=${mapTilerToken}`;
-  zoom = 3;
 
   mapPins: any = [];
 
