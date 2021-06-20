@@ -46,3 +46,8 @@ export const getPropertyInfoLoading = createSelector(
   getPageState,
   fromPageStateReducer.getPropertyInfoLoadingState
 );
+
+export const getMapPins = createSelector(
+  getPageState,
+  fromPageStateReducer.getMapPinstate
+);
