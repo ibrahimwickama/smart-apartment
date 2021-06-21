@@ -8,17 +8,17 @@
     <mat-accordion class="filter-accordin">
       <mat-expansion-panel class="filter-accordin filter-bg">
         <mat-expansion-panel-header class="appartment-filters-section filter-header-view">
-          <mat-panel-title class="">
+          <mat-panel-title class="color-white">
             Filters
           </mat-panel-title>
         </mat-expansion-panel-header>
         <!-- filters contents -->
         <div class="row d-block w-100 mx-0 pb-2 appartment-filters-section">
-          <label class="pb-2">Rents</label>
+          <label class="pb-2">Rents({{ filteredRentValue | commaSeparator }})</label>
           <div class="w-100 d-flex justify-content-between">
             <div class="card w-75 d-flex align-items-center">
-              <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1000" step="1000" min="0" max="100000"
-                aria-label="units"></mat-slider>
+              <mat-slider thumbLabel [displayWith]="formatLabel" (input)="pitch($event)" tickInterval="1000" step="1000"
+                min="0" max="100000" aria-label="units"></mat-slider>
             </div>
             <button mat-stroked-button class="done-button" color="primary">DONE</button>
           </div>
@@ -29,13 +29,29 @@
           <div class="w-100 d-flex justify-content-between">
             <div class="card w-75 d-flex align-items-center color-black">
               <section class="my-auto">
-                <mat-checkbox class="mx-1">Studio</mat-checkbox>
-                <mat-checkbox class="mx-1">1 Bed</mat-checkbox>
-                <mat-checkbox class="mx-1">2 Bed</mat-checkbox>
-                <mat-checkbox class="mx-1">3 Bed</mat-checkbox>
+                <mat-checkbox class="mx-1" [checked]="bedroomsSelections.studio"
+                  (change)="toggleStudioCheckbox($event)">Studio</mat-checkbox>
+                <mat-checkbox class="mx-1" [checked]="bedroomsSelections.bed1" (change)="toggleBed1Checkbox($event)">1
+                  Bed</mat-checkbox>
+                <mat-checkbox class="mx-1" [checked]="bedroomsSelections.bed2" (change)="toggleBed2Checkbox($event)">2
+                  Bed</mat-checkbox>
+                <mat-checkbox class="mx-1" [checked]="bedroomsSelections.bed3" (change)="toggleBed3Checkbox($event)">3
+                  Bed</mat-checkbox>
               </section>
             </div>
             <button mat-stroked-button class="done-button" color="primary">DONE</button>
+          </div>
+
+          <mat-divider class="my-4"></mat-divider>
+
+
+          <div class="w-100 d-flex align-items-center justify-content-between">
+            <label class="pb-2">Favorite</label>
+            <button mat-icon-button (click)="togglePropertyFavorite()"
+              [ngClass]="{'favourite-icon-bg-color': filterFavoriteProperty, 'bg-white': !filterFavoriteProperty}">
+              <mat-icon [ngClass]="{'color-white': filterFavoriteProperty, 'color-black': !filterFavoriteProperty}">
+                favorite</mat-icon>
+            </button>
           </div>
 
         </div>

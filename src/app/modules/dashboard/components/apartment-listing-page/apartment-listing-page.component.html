@@ -4,7 +4,7 @@
       <button mat-icon-button>
         <mat-icon class="color-white font-x-large" matTooltip="Back to results" [routerLink]="'/'"
           (click)="backToListings($event)">arrow_backward
-        </mat-icon>
+        </mat-icon> Back
       </button>
       <button mat-fab (click)="updatePropertyFavorite()"
         [ngClass]="{'favourite-icon-bg-color': (property$ | async).favorite, 'bg-white': !(property$ | async).favorite}">
