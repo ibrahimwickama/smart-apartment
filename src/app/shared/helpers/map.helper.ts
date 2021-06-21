@@ -3,6 +3,9 @@ export function getMapPinsFromListingRecords(records) {
     return {
       id: record?.propertyID,
       favorite: record?.favorite,
+      name: record?.name,
+      city: record?.city,
+      streetAddress: record?.streetAddress,
       coordinates: [
         parseFloat(record?.geocode?.Longitude),
         parseFloat(record?.geocode?.Latitude),
@@ -23,6 +26,9 @@ export function getMapPinFromPropertyInfo(propertyInfo) {
     return {
       id: record?.propertyID,
       favorite: record?.favorite,
+      name: record?.name,
+      city: record?.city,
+      streetAddress: record?.streetAddress,
       coordinates: [
         parseFloat(record?.geocode?.Longitude),
         parseFloat(record?.geocode?.Latitude),

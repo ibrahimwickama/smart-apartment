@@ -31,6 +31,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
     mapboxgl.accessToken = mapboxToken;
     this.store.select(fromSelectors.getMapPins).subscribe((mapPins) => {
       this.mapPins = mapPins;
+      // TODO: Find best way to update map without re-rendering entire map visualization
       if (mapPins.length > 1) {
         this.buildMap();
       } else if (mapPins.length == 1) {
@@ -72,8 +73,25 @@ export class MapViewComponent implements OnInit, AfterViewInit {
         // create custom marker html
         const markerElement = new mapboxgl.Marker(el)
           .setLngLat(marker.coordinates)
+          .setPopup(
+            new mapboxgl.Popup().setHTML(
+              `<h4>${marker?.name}</h4>
+              <p style="color: #6c757d">
+              ${marker?.city}, ${marker?.streetAddress}
+              </p>`
+            )
+          )
           .addTo(map);
+        const markerDiv = markerElement.getElement();
+        markerDiv.addEventListener('mouseenter', () =>
+          markerElement.togglePopup()
+        );
+        markerDiv.addEventListener('mouseleave', () =>
+          markerElement.togglePopup()
+        );
         markerElement.getElement().addEventListener('click', (e) => {
+          // remove detail pop-up
+          markerElement.togglePopup();
           const propertyId = event?.srcElement['id'] || '';
           window.location.href = `#/dashboard/home?view=property&propertyid=${propertyId}`;
         });
@@ -108,9 +126,24 @@ export class MapViewComponent implements OnInit, AfterViewInit {
         el.style.backgroundSize = '100%';
         // create custom marker html
 
-        new mapboxgl.Marker({ element: el })
+        const markerElement = new mapboxgl.Marker(el)
           .setLngLat(marker.coordinates)
+          .setPopup(
+            new mapboxgl.Popup().setHTML(
+              `<h4>${marker?.name}</h4>
+              <p style="color: #6c757d">
+              ${marker?.city}, ${marker?.streetAddress}
+              </p>`
+            )
+          )
           .addTo(map);
+        const markerDiv = markerElement.getElement();
+        markerDiv.addEventListener('mouseenter', () =>
+          markerElement.togglePopup()
+        );
+        markerDiv.addEventListener('mouseleave', () =>
+          markerElement.togglePopup()
+        );
       });
       this.map = map;
     } catch (e) {}
