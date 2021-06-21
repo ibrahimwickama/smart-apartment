@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod --aot --build-optimizer && cd dist/smart-apartment && zip -r -D smart-apartment.zip .",
     "test": "env TS_NODE_PROJECT=\"tsconfig.testing.json\" node_modules/.bin/mocha -r ts-node/register test/**/*.spec.ts",
     "lint": "ng lint",
     "e2e": "ng e2e"
