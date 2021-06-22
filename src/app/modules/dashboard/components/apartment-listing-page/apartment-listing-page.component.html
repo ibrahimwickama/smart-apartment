@@ -6,28 +6,37 @@
           (click)="backToListings($event)">arrow_backward
         </mat-icon> Back
       </button>
-      <button mat-fab (click)="updatePropertyFavorite()"
+      <button mat-fab (click)="updatePropertyFavorite()" *ngIf="(currentDevice$ | async) === 'desktop'"
         [ngClass]="{'favourite-icon-bg-color': (property$ | async).favorite, 'bg-white': !(property$ | async).favorite}">
         <mat-icon
           [ngClass]="{'color-white': (property$ | async).favorite, 'color-black': !(property$ | async).favorite}">
           favorite</mat-icon>
       </button>
     </div>
-    <div class="row w-100 mx-0 py-2 listing-item-header">
-      <span class="w-100 mb-2 d-flex align-items-center">
-        <label class="color-white d-flex align-items-center">
-          {{ (property$ | async)?.name }}
+    <div class="row w-100 mx-0 py-2 d-flex justify-content-between listing-item-header">
+      <div class="w-50">
+        <span class="w-100 mb-2 d-flex align-items-center">
+          <label class="color-white d-flex align-items-center">
+            {{ (property$ | async)?.name }}
+          </label>
+          <a class="mx-2 color-white d-flex align-items-center" href="https://my.smartapartmentdata.com" target="_blank"
+            rel="noopener" title="Link">
+            <mat-icon>public</mat-icon>
+          </a>
+        </span>
+        <label class="w-100 color-white font-small">
+          {{ (property$ | async)?.city }}
         </label>
-        <a class="mx-2 color-white d-flex align-items-center" href="https://my.smartapartmentdata.com" target="_blank"
-          rel="noopener" title="Link">
-          <mat-icon>public</mat-icon>
-        </a>
+      </div>
 
-      </span>
-
-      <label class="w-100 color-white font-small">
-        {{ (property$ | async)?.city }}
-      </label>
+      <div class="w-50 d-flex justify-content-center" *ngIf="(currentDevice$ | async) === 'mobile'">
+        <button mat-fab (click)="updatePropertyFavorite()"
+          [ngClass]="{'favourite-icon-bg-color': (property$ | async).favorite, 'bg-white': !(property$ | async).favorite}">
+          <mat-icon
+            [ngClass]="{'color-white': (property$ | async).favorite, 'color-black': !(property$ | async).favorite}">
+            favorite</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
 

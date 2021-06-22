@@ -1,8 +1,11 @@
 <div class="container-fluid px-0 overflow-x-hidden">
   <!-- sticky top section  -->
   <div class="w-100 sticky-top" [ngClass]="{'sticky-top-panel': !(apartmentListingsLoading$ | async) }">
-    <div class="row d-flex align-items-center w-100 mx-0 px-2 company-title-section">
-      {{ (agentInfo$ | async)?.firstname }} {{ (agentInfo$ | async)?.lastname }} | {{ (agentInfo$ | async)?.company }}
+    <div class="row d-flex justify-content-between align-items-center w-100 mx-0 px-2 company-title-section">
+      <label> {{ (agentInfo$ | async)?.firstname }} {{ (agentInfo$ | async)?.lastname }} |
+        {{ (agentInfo$ | async)?.company }} </label>
+
+
     </div>
     <!-- filters section -->
     <mat-accordion class="filter-accordin">

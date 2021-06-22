@@ -12,10 +12,12 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./apartment-listing-page.component.css'],
 })
 export class ApartmentListingPageComponent implements OnInit {
+  currentDevice$: Observable<string>;
   property$: Observable<any>;
   propertyInfoLoading$: Observable<boolean>;
 
   constructor(private store: Store<AppState>) {
+    this.currentDevice$ = this.store.select(fromSelectors.getCurrentDevice);
     this.property$ = this.store.select(fromSelectors.getPropertyInfo);
     this.propertyInfoLoading$ = this.store.select(
       fromSelectors.getPropertyInfoLoading

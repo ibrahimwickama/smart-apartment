@@ -1,0 +1,6 @@
+.drawer-button {
+  position: fixed !important;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 100;
+}
