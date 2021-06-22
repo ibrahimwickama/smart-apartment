@@ -13,7 +13,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Extra features
 
-> - Added tooltipe popup on markers for easy marker detail idenfitication
+> - Added filters selection reset feature
+> - Added tooltip popup on markers for easy marker detail idenfitication
 
 ## Development server
 

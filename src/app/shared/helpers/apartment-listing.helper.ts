@@ -1,5 +1,8 @@
 import { removeDuplicates } from './shared.helper';
-import { getMapPinsFromListingRecords } from './map.helper';
+import {
+  getMapPinsFromListingRecords,
+  resetMapPinsInformation,
+} from './map.helper';
 
 export function sanitizeApartmentListingPayload(listingRecords) {
   const updatedListingRecords = (listingRecords || []).map((item) => ({
@@ -10,44 +13,34 @@ export function sanitizeApartmentListingPayload(listingRecords) {
 }
 
 export function filterApartmentsListingFromFilterselections(
-  records,
+  recordsEntities,
   filterSelections
 ) {
-  let filteredListings = [];
-  // filter by rent
-  if (filterSelections.rent) {
-    (records || []).forEach((record) => {
-      if (
-        record?.floorplans.some((plan) => filterSelections.rent >= plan?.price)
-      ) {
-        filteredListings.push(record);
-      }
-    });
-  }
+  const records: any = Object.values(recordsEntities) || [];
+  let filteredListings = records;
 
   // filter by favorite
-  if (filterSelections.favoriteProperties) {
-    const filteredrecords = records.filter((record) => record.favorite);
-    filteredListings = filteredListings.concat(filteredrecords);
-  }
+  filteredListings = filteredListings.filter(
+    (record) => record.favorite === filterSelections.favoriteProperties
+  );
 
-  // filtee by bedrooms
-  (records || []).forEach((record) => {
-    if (
-      record?.floorplans.some(
-        (plan) =>
-          (filterSelections?.bedrooms === 0 &&
-            filterSelections?.bedrooms?.studio) ||
-          (filterSelections?.bedrooms === 1 &&
-            filterSelections?.bedrooms?.bed1) ||
-          (filterSelections?.bedrooms === 2 &&
-            filterSelections?.bedrooms?.bed2) ||
-          (filterSelections?.bedrooms === 3 && filterSelections?.bedrooms?.bed3)
-      )
-    ) {
-      filteredListings.push(record);
-    }
-  });
+  // filter by rent
+  filteredListings = (filteredListings || []).filter((record) =>
+    (record?.floorplans || []).some(
+      (plan) => filterSelections.rent >= plan?.price
+    )
+  );
+
+  // filter by bedrooms
+  filteredListings = (filteredListings || []).filter((record) =>
+    (record?.floorplans || []).some(
+      (plan) =>
+        (plan?.bedrooms === 0 && filterSelections?.bedrooms?.studio) ||
+        (plan?.bedrooms === 1 && filterSelections?.bedrooms?.bed1) ||
+        (plan?.bedrooms === 2 && filterSelections?.bedrooms?.bed2) ||
+        (plan?.bedrooms === 3 && filterSelections?.bedrooms?.bed3)
+    )
+  );
 
   // now remove duplicates
   const targetedListings = removeDuplicates(filteredListings, 'propertyID');

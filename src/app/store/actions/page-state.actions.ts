@@ -30,6 +30,11 @@ export const updateCurrentPropertyInfo = createAction(
   props<{ payload: PropertyInfo }>()
 );
 
+export const updateMapPinsFromFilters = createAction(
+  '[PageState/API] Update Map Pins From Filters',
+  props<{ payload: any }>()
+);
+
 export const resetMapPins = createAction('[PageState/API] Reset Map Pins');
 
 export const updateNotification = createAction(

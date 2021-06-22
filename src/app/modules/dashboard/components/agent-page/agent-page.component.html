@@ -18,9 +18,10 @@
           <div class="w-100 d-flex justify-content-between">
             <div class="card w-75 d-flex align-items-center">
               <mat-slider thumbLabel [displayWith]="formatLabel" (input)="pitch($event)" tickInterval="1000" step="1000"
-                min="0" max="100000" aria-label="units"></mat-slider>
+                min="0" max="100000" aria-label="units" [value]="filteredRentValue"></mat-slider>
             </div>
-            <button mat-stroked-button class="done-button" color="primary">DONE</button>
+            <button mat-stroked-button class="done-button" color="primary"
+              (click)="updateListingFilters()">DONE</button>
           </div>
 
           <mat-divider class="my-4"></mat-divider>
@@ -39,11 +40,11 @@
                   Bed</mat-checkbox>
               </section>
             </div>
-            <button mat-stroked-button class="done-button" color="primary">DONE</button>
+            <button mat-stroked-button class="done-button" color="primary"
+              (click)="updateListingFilters()">DONE</button>
           </div>
 
           <mat-divider class="my-4"></mat-divider>
-
 
           <div class="w-100 d-flex align-items-center justify-content-between">
             <label class="pb-2">Favorite</label>
@@ -53,6 +54,11 @@
                 favorite</mat-icon>
             </button>
           </div>
+
+          <mat-divider class="my-4"></mat-divider>
+          <button mat-stroked-button class="done-button" color="primary" (click)="resetFilters()">Reset
+            Filters</button>
+
 
         </div>
         <!-- filters contents -->

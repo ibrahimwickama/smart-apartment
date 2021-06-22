@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppState } from '../../../../store/reducers';
 import * as fromSelectors from '../../../../store/selectors';
+import * as fromActions from '../../../../store/actions';
 import { Store } from '@ngrx/store';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 
@@ -82,6 +83,7 @@ export class AgentPageComponent implements OnInit {
 
   togglePropertyFavorite() {
     this.filterFavoriteProperty = !this.filterFavoriteProperty;
+    this.updateListingFilters();
   }
 
   updateListingFilters() {
@@ -90,5 +92,20 @@ export class AgentPageComponent implements OnInit {
       bedrooms: this.bedroomsSelections,
       favoriteProperties: this.filterFavoriteProperty,
     };
+    this.store.dispatch(
+      fromActions.updateMapPinsFromFilters({ payload: filterPayload })
+    );
+  }
+
+  resetFilters() {
+    this.filteredRentValue = 0;
+    this.bedroomsSelections = {
+      studio: false,
+      bed1: false,
+      bed2: false,
+      bed3: false,
+    };
+    this.filterFavoriteProperty = false;
+    this.store.dispatch(fromActions.resetMapPins());
   }
 }
