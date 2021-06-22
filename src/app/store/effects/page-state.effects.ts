@@ -31,7 +31,6 @@ export class PageStateEffects {
             ),
             catchError((error: Error) =>
               of(
-                console.log(error),
                 this.store.dispatch(
                   fromActions.updateNotification({
                     payload: {

@@ -1,1 +1,2 @@
-<div id="map" class="map-view-window"></div>
+<div id="map" class="map-view-window" *ngIf="!(apartmentListingsLoading$ | async) || !(propertyInfoLoading$ | async)">
+</div>

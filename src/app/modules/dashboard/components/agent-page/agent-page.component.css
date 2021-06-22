@@ -41,6 +41,11 @@ mat-slider {
   width: 12rem;
 }
 
+.app-item-image-on-list-view-mobile {
+  /* height: 130px; */
+  width: 10rem;
+}
+
 .sticky-top-panel {
   position: absolute;
   top: 0;
@@ -50,4 +55,20 @@ mat-slider {
 
 .listing-margin-top {
   margin-top: 90px;
+}
+
+.mat-chip-wrapper-max-width-mobile {
+  max-width: 155px !important;
+}
+
+
+@media (max-width: 992px) {
+  ::ng-deep .mat-chip-list-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: -4px;
+    max-width: 170px;
+  }
 }

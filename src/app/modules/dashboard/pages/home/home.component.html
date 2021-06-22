@@ -1,6 +1,12 @@
+<button mat-fab color="primary" aria-label="Side nav drawer" class="drawer-button"
+  *ngIf="(currentDevice$ | async) === 'mobile'" (click)="drawer.toggle()">
+  <mat-icon>map</mat-icon>
+</button>
+
 <mat-drawer-container class="sidenav-container" autosize>
   <!-- sidenav-mat-drawer -->
-  <mat-drawer #drawer class="sidenav-drawer overflow-x-hidden" mode="side" opened>
+  <mat-drawer #drawer class="sidenav-drawer overflow-x-hidden" mode="side" opened
+    [ngClass]="{'min-sidenav-drawer-width': (currentDevice$ | async) === 'desktop' }">
     <div class="w-100" *ngIf="!(routerParams$ | async)?.view">
       <app-agent-page></app-agent-page>
     </div>
@@ -13,10 +19,9 @@
   <!-- center-contents -->
   <div class="d-flex justify-content-center align-items-center h-100">
     <!-- map-content -->
-    <div class="w-100" *ngIf="!(apartmentListingsLoading$ | async) || !(propertyInfoLoading$ | async)">
+    <div class="w-100">
       <app-map-view></app-map-view>
     </div>
-
     <!-- map-content -->
   </div>
   <!-- center-contents -->

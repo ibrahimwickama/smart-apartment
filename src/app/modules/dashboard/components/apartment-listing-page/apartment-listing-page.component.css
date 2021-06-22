@@ -23,6 +23,11 @@
   width: 12rem !important;
 }
 
+.app-item-image-on-list-view-mobile {
+  /* height: 130px; */
+  width: 11rem !important;
+}
+
 .sticky-top-panel {
   position: absolute;
   top: 0;

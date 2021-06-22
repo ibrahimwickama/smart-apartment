@@ -1,26 +1,29 @@
 <div class="container-fluid px-0 overflow-x-hidden">
   <!-- sticky top section  -->
   <div class="w-100 sticky-top" [ngClass]="{'sticky-top-panel': !(apartmentListingsLoading$ | async) }">
-    <div class="row d-flex align-items-center w-100 mx-0 px-2 company-title-section">
-      {{ (agentInfo$ | async)?.firstname }} {{ (agentInfo$ | async)?.lastname }} | {{ (agentInfo$ | async)?.company }}
+    <div class="row d-flex justify-content-between align-items-center w-100 mx-0 px-2 company-title-section">
+      <label *ngIf="!(apartmentListingsLoading$ | async)"> {{ (agentInfo$ | async)?.firstname }}
+        {{ (agentInfo$ | async)?.lastname }} |
+        {{ (agentInfo$ | async)?.company }} </label>
     </div>
     <!-- filters section -->
     <mat-accordion class="filter-accordin">
       <mat-expansion-panel class="filter-accordin filter-bg">
         <mat-expansion-panel-header class="appartment-filters-section filter-header-view">
-          <mat-panel-title class="">
+          <mat-panel-title class="color-white">
             Filters
           </mat-panel-title>
         </mat-expansion-panel-header>
         <!-- filters contents -->
         <div class="row d-block w-100 mx-0 pb-2 appartment-filters-section">
-          <label class="pb-2">Rents</label>
+          <label class="pb-2">Rents({{ filteredRentValue | commaSeparator }})</label>
           <div class="w-100 d-flex justify-content-between">
             <div class="card w-75 d-flex align-items-center">
-              <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1000" step="1000" min="0" max="100000"
-                aria-label="units"></mat-slider>
+              <mat-slider thumbLabel [displayWith]="formatLabel" (input)="pitch($event)" tickInterval="1000" step="1000"
+                min="0" max="100000" aria-label="units" [value]="filteredRentValue"></mat-slider>
             </div>
-            <button mat-stroked-button class="done-button" color="primary">DONE</button>
+            <button mat-stroked-button class="done-button" color="primary"
+              (click)="updateListingFilters()">DONE</button>
           </div>
 
           <mat-divider class="my-4"></mat-divider>
@@ -29,14 +32,35 @@
           <div class="w-100 d-flex justify-content-between">
             <div class="card w-75 d-flex align-items-center color-black">
               <section class="my-auto">
-                <mat-checkbox class="mx-1">Studio</mat-checkbox>
-                <mat-checkbox class="mx-1">1 Bed</mat-checkbox>
-                <mat-checkbox class="mx-1">2 Bed</mat-checkbox>
-                <mat-checkbox class="mx-1">3 Bed</mat-checkbox>
+                <mat-checkbox class="mx-1" [checked]="bedroomsSelections.studio"
+                  (change)="toggleStudioCheckbox($event)">Studio</mat-checkbox>
+                <mat-checkbox class="mx-1" [checked]="bedroomsSelections.bed1" (change)="toggleBed1Checkbox($event)">1
+                  Bed</mat-checkbox>
+                <mat-checkbox class="mx-1" [checked]="bedroomsSelections.bed2" (change)="toggleBed2Checkbox($event)">2
+                  Bed</mat-checkbox>
+                <mat-checkbox class="mx-1" [checked]="bedroomsSelections.bed3" (change)="toggleBed3Checkbox($event)">3
+                  Bed</mat-checkbox>
               </section>
             </div>
-            <button mat-stroked-button class="done-button" color="primary">DONE</button>
+            <button mat-stroked-button class="done-button" color="primary"
+              (click)="updateListingFilters()">DONE</button>
           </div>
+
+          <mat-divider class="my-4"></mat-divider>
+
+          <div class="w-100 d-flex align-items-center justify-content-between">
+            <label class="pb-2">Favorite</label>
+            <button mat-icon-button (click)="togglePropertyFavorite()"
+              [ngClass]="{'favourite-icon-bg-color': filterFavoriteProperty, 'bg-white': !filterFavoriteProperty}">
+              <mat-icon [ngClass]="{'color-white': filterFavoriteProperty, 'color-black': !filterFavoriteProperty}">
+                favorite</mat-icon>
+            </button>
+          </div>
+
+          <mat-divider class="my-4"></mat-divider>
+          <button mat-stroked-button class="done-button" color="primary" (click)="resetFilters()">Reset
+            Filters</button>
+
 
         </div>
         <!-- filters contents -->
@@ -57,24 +81,27 @@
       *ngFor="let listing of (apartmentListing$ | async); trackBy: trackByFn;" [routerLink]="'/dashboard/home'"
       [queryParams]="{view: 'property', propertyid: listing?.propertyID }">
       <div class="row w-100 mx-0 d-flex justify-content-between">
-        <div class="col-sm-8">
+        <div class="w-auto"
+          [ngClass]="{'col-sm-8': (currentDevice$ | async) === 'desktop', 'col-sm': (currentDevice$ | async) === 'mobile'}">
           <label class="w-100 pt-1 mb-0 font-bold d-flex align-items-center">
             <mat-icon class="favourite-icon-color mr-2" *ngIf="listing.favorite">favorite</mat-icon>
             {{ listing?.name }}
           </label>
           <label class="text-muted font-small"> {{ listing?.streetAddress }}, {{ listing?.city }}</label>
           <mat-chip-list class="w-100">
-            <mat-chip class="text-muted" *ngFor="let floorPlan of listing.floorplans" [matTooltip]="floorPlan.type">
+            <mat-chip class="text-muted font-small" *ngFor="let floorPlan of listing.floorplans"
+              [matTooltip]="floorPlan.type">
               $ {{ floorPlan.price | commaSeparator }}
             </mat-chip>
           </mat-chip-list>
           <label class="w-100 font-small text-muted"> {{ (listing?.highValueAmenities || []).length }} High value
             amenities</label>
         </div>
-        <div class="col-sm-4 px-0 d-flex justify-content-end">
+        <div class="w-auto px-0 d-flex justify-content-end"
+          [ngClass]="{'col-sm-4': (currentDevice$ | async) === 'desktop', 'col-sm': (currentDevice$ | async) === 'mobile'}">
           <div class="app-item-icon-loader">
-            <img [src]="listing?.photo" alt=""
-              class="app-item-image-on-list-view img-fluid object-fit-cover border-radius-6px">
+            <img [src]="listing?.photo" alt="" class="img-fluid object-fit-cover border-radius-6px"
+              [ngClass]="{'app-item-image-on-list-view': (currentDevice$ | async) === 'desktop', 'app-item-image-on-list-view-mobile': (currentDevice$ | async) === 'mobile'}">
           </div>
         </div>
       </div>

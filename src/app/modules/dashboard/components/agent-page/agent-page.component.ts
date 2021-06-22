@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppState } from '../../../../store/reducers';
 import * as fromSelectors from '../../../../store/selectors';
+import * as fromActions from '../../../../store/actions';
 import { Store } from '@ngrx/store';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-agent-page',
@@ -10,11 +12,22 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./agent-page.component.css'],
 })
 export class AgentPageComponent implements OnInit {
+  currentDevice$: Observable<string>;
   apartmentListing$: Observable<any>;
   agentInfo$: Observable<any>;
   apartmentListingsLoading$: Observable<boolean>;
 
+  filteredRentValue: number = 0;
+  bedroomsSelections = {
+    studio: false,
+    bed1: false,
+    bed2: false,
+    bed3: false,
+  };
+  filterFavoriteProperty: boolean = false;
+
   constructor(private store: Store<AppState>) {
+    this.currentDevice$ = this.store.select(fromSelectors.getCurrentDevice);
     this.apartmentListingsLoading$ = this.store.select(
       fromSelectors.getApartmentListingsLoading
     );
@@ -36,5 +49,65 @@ export class AgentPageComponent implements OnInit {
     }
 
     return value;
+  }
+
+  pitch(event: any) {
+    this.filteredRentValue = event.value;
+  }
+
+  toggleStudioCheckbox(e: MatCheckboxChange) {
+    this.bedroomsSelections = {
+      ...this.bedroomsSelections,
+      studio: e.checked,
+    };
+  }
+
+  toggleBed1Checkbox(e: MatCheckboxChange) {
+    this.bedroomsSelections = {
+      ...this.bedroomsSelections,
+      bed1: e.checked,
+    };
+  }
+
+  toggleBed2Checkbox(e: MatCheckboxChange) {
+    this.bedroomsSelections = {
+      ...this.bedroomsSelections,
+      bed2: e.checked,
+    };
+  }
+
+  toggleBed3Checkbox(e: MatCheckboxChange) {
+    this.bedroomsSelections = {
+      ...this.bedroomsSelections,
+      bed3: e.checked,
+    };
+  }
+
+  togglePropertyFavorite() {
+    this.filterFavoriteProperty = !this.filterFavoriteProperty;
+    this.updateListingFilters();
+  }
+
+  updateListingFilters() {
+    const filterPayload = {
+      rent: this.filteredRentValue,
+      bedrooms: this.bedroomsSelections,
+      favoriteProperties: this.filterFavoriteProperty,
+    };
+    this.store.dispatch(
+      fromActions.updateMapPinsFromFilters({ payload: filterPayload })
+    );
+  }
+
+  resetFilters() {
+    this.filteredRentValue = 0;
+    this.bedroomsSelections = {
+      studio: false,
+      bed1: false,
+      bed2: false,
+      bed3: false,
+    };
+    this.filterFavoriteProperty = false;
+    this.store.dispatch(fromActions.resetMapPins());
   }
 }

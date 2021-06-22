@@ -12,6 +12,7 @@ import {
   getMapPinsFromListingRecords,
   getMapPinFromPropertyInfo,
   resetMapPinsInformation,
+  filterApartmentsListingFromFilterselections,
 } from '../../shared/helpers';
 
 export const pageStatesFeatureKey = 'pageStates';
@@ -72,6 +73,13 @@ export const reducer = createReducer(
   on(PageStateActions.updateNotificationStatus, (state, action) => ({
     ...state,
     notificationStatus: action.payload,
+  })),
+  on(PageStateActions.updateMapPinsFromFilters, (state, action) => ({
+    ...state,
+    mapPins: filterApartmentsListingFromFilterselections(
+      state.entities,
+      action.payload
+    ),
   })),
   on(PageStateActions.resetMapPins, (state, action) => ({
     ...state,
