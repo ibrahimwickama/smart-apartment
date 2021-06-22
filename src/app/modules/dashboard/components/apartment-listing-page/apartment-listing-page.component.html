@@ -45,14 +45,26 @@
   </mat-progress-bar>
   <!-- End of Progressive Loader -->
 
-  <!-- Image slide section -->
-  <div class="row mx-0 d-flex listing-margin-top" *ngIf="!(propertyInfoLoading$ | async)">
+  <!-- Image slide section desktop -->
+  <div class="row mx-0 d-flex listing-margin-top"
+    *ngIf="!(propertyInfoLoading$ | async) && (currentDevice$ | async) === 'desktop'">
     <div class="col-sm-2 col-sm-3 p-1" *ngFor="let imagesurl of (property$ | async).photos | slice:0:3;">
       <img [src]="imagesurl" alt="" class="app-item-image-on-list-view img-fluid object-fit-cover border-radius-6px">
     </div>
     <button mat-stroked-button class="w-auto my-1">{{ ((property$ | async)?.photos || []).length  }}+ photos</button>
   </div>
-  <!-- Image slide section -->
+  <!-- Image slide section desktop -->
+
+  <!-- Image slide section mobile -->
+  <div class="row mx-0 d-flex listing-margin-top"
+    *ngIf="!(propertyInfoLoading$ | async) && (currentDevice$ | async) === 'mobile'">
+    <div class="col-sm-2 w-auto p-1" *ngFor="let imagesurl of (property$ | async).photos | slice:0:3;">
+      <img [src]="imagesurl" alt=""
+        class="app-item-image-on-list-view-mobile img-fluid object-fit-cover border-radius-6px">
+    </div>
+    <button mat-stroked-button class="w-auto my-1">{{ ((property$ | async)?.photos || []).length  }}+ photos</button>
+  </div>
+  <!-- Image slide section mobile -->
 
   <div class="row w-100 mx-0" *ngIf="!(propertyInfoLoading$ | async)">
     <mat-tab-group mat-align-tabs="center">

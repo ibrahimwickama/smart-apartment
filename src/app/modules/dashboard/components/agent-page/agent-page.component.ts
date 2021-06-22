@@ -12,6 +12,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
   styleUrls: ['./agent-page.component.css'],
 })
 export class AgentPageComponent implements OnInit {
+  currentDevice$: Observable<string>;
   apartmentListing$: Observable<any>;
   agentInfo$: Observable<any>;
   apartmentListingsLoading$: Observable<boolean>;
@@ -26,6 +27,7 @@ export class AgentPageComponent implements OnInit {
   filterFavoriteProperty: boolean = false;
 
   constructor(private store: Store<AppState>) {
+    this.currentDevice$ = this.store.select(fromSelectors.getCurrentDevice);
     this.apartmentListingsLoading$ = this.store.select(
       fromSelectors.getApartmentListingsLoading
     );

@@ -140,6 +140,10 @@ body {
   overflow-x: hidden !important;
 }
 
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
 .font-weight-600 {
   font-weight: 600 !important;
 }
