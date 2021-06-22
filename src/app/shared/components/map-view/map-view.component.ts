@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  ChangeDetectorRef,
-} from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/reducers';
@@ -21,6 +16,9 @@ declare let mapboxgl: any;
   styleUrls: ['./map-view.component.css'],
 })
 export class MapViewComponent implements OnInit, AfterViewInit {
+  apartmentListingsLoading$: Observable<boolean>;
+  propertyInfoLoading$: Observable<boolean>;
+
   map: any;
   style =
     'https://api.maptiler.com/maps/eef16200-c4cc-4285-9370-c71ca24bb42d/style.json?key=CH1cYDfxBV9ZBu1lHGqh';
@@ -29,6 +27,12 @@ export class MapViewComponent implements OnInit, AfterViewInit {
 
   constructor(private store: Store<AppState>) {
     mapboxgl.accessToken = mapboxToken;
+    this.apartmentListingsLoading$ = this.store.select(
+      fromSelectors.getApartmentListingsLoading
+    );
+    this.propertyInfoLoading$ = this.store.select(
+      fromSelectors.getPropertyInfoLoading
+    );
     this.store.select(fromSelectors.getMapPins).subscribe((mapPins) => {
       this.mapPins = mapPins;
       // TODO: Find best way to update map without re-rendering entire map visualization
