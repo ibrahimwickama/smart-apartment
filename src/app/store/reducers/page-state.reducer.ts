@@ -6,7 +6,6 @@ import {
   AgentInfo,
   PropertyInfo,
 } from '../models';
-import * as PageStateActions from '../actions/page-state.actions';
 import {
   sanitizeApartmentListingPayload,
   getMapPinsFromListingRecords,
@@ -14,6 +13,18 @@ import {
   resetMapPinsInformation,
   filterApartmentsListingFromFilterselections,
 } from '../../shared/helpers';
+import {
+  addAgentListings,
+  loadCurrentDevice,
+  loadApartmentListings,
+  loadPropertyInfo,
+  updateNotification,
+  updateNotificationStatus,
+  updateMapPinsFromFilters,
+  resetMapPins,
+  updateCurrentPropertyInfo,
+  updatePropertyInfoFavorite,
+} from '../actions/page-state.actions';
 
 export const pageStatesFeatureKey = 'pageStates';
 
@@ -53,45 +64,45 @@ export const initialState: State = adapter.getInitialState({
 
 export const reducer = createReducer(
   initialState,
-  on(PageStateActions.loadCurrentDevice, (state, action) => ({
+  on(loadCurrentDevice, (state, action) => ({
     ...state,
     currentDevice: action.payload,
   })),
-  on(PageStateActions.loadApartmentListings, (state, action) => ({
+  on(loadApartmentListings, (state, action) => ({
     ...state,
     loadingApartmentListings: true,
   })),
-  on(PageStateActions.loadPropertyInfo, (state, action) => ({
+  on(loadPropertyInfo, (state, action) => ({
     ...state,
     loadingPropertyInfo: true,
   })),
-  on(PageStateActions.updateNotification, (state, action) => ({
+  on(updateNotification, (state, action) => ({
     ...state,
     notification: action.payload,
     notificationStatus: true,
   })),
-  on(PageStateActions.updateNotificationStatus, (state, action) => ({
+  on(updateNotificationStatus, (state, action) => ({
     ...state,
     notificationStatus: action.payload,
   })),
-  on(PageStateActions.updateMapPinsFromFilters, (state, action) => ({
+  on(updateMapPinsFromFilters, (state, action) => ({
     ...state,
     mapPins: filterApartmentsListingFromFilterselections(
       state.entities,
       action.payload
     ),
   })),
-  on(PageStateActions.resetMapPins, (state, action) => ({
+  on(resetMapPins, (state, action) => ({
     ...state,
     mapPins: resetMapPinsInformation(state.entities),
   })),
-  on(PageStateActions.updateCurrentPropertyInfo, (state, action) => ({
+  on(updateCurrentPropertyInfo, (state, action) => ({
     ...state,
     currentViewedProperty: action.payload,
     mapPins: getMapPinFromPropertyInfo(action.payload),
     loadingPropertyInfo: false,
   })),
-  on(PageStateActions.updatePropertyInfoFavorite, (state, action) => ({
+  on(updatePropertyInfoFavorite, (state, action) => ({
     ...state,
     mapPins: [
       {
@@ -111,7 +122,7 @@ export const reducer = createReducer(
       },
     },
   })),
-  on(PageStateActions.addAgentListings, (state, action) =>
+  on(addAgentListings, (state, action) =>
     adapter.addMany(sanitizeApartmentListingPayload(action.payload.records), {
       ...state,
       mapPins: getMapPinsFromListingRecords(action.payload.records),

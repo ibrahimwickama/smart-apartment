@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './store/reducers';
-import * as fromActions from './store/actions';
-import * as fromSelectors from './store/selectors';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { loadApartmentListings, loadCurrentDevice } from './store/actions/page-state.actions';
+import { getNotification } from './store/selectors/page-state.selectors';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class AppComponent implements OnInit {
   constructor(private store: Store<AppState>, private snackBar: MatSnackBar) {
     this.store
-      .select(fromSelectors.getNotification)
+      .select(getNotification)
       .subscribe((notification) => {
         // Trigger SnackaBar pop-up view
         if (notification.message) {
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.detectCurrentDevice();
     // Loading apartment listings data
-    this.store.dispatch(fromActions.loadApartmentListings());
+    this.store.dispatch(loadApartmentListings());
   }
   detectCurrentDevice() {
     const userAgent = navigator.userAgent;
@@ -43,16 +43,16 @@ export class AppComponent implements OnInit {
       )
     ) {
       // indicates using of mobile device
-      this.store.dispatch(fromActions.loadCurrentDevice({ payload: 'mobile' }));
+      this.store.dispatch(loadCurrentDevice({ payload: 'mobile' }));
     } else if (/Chrome/i.test(userAgent)) {
       // indicates using of desktop chrome
       this.store.dispatch(
-        fromActions.loadCurrentDevice({ payload: 'desktop' })
+        loadCurrentDevice({ payload: 'desktop' })
       );
     } else {
       // indicates using of desktop
       this.store.dispatch(
-        fromActions.loadCurrentDevice({ payload: 'desktop' })
+        loadCurrentDevice({ payload: 'desktop' })
       );
     }
   }

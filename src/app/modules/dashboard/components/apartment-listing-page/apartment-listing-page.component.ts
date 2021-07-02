@@ -1,10 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppState } from '../../../../store/reducers';
-import * as fromSelectors from '../../../../store/selectors';
-import * as fromActions from '../../../../store/actions';
 import { Store } from '@ngrx/store';
 import { first } from 'rxjs/operators';
+import {
+  getCurrentDevice,
+  getPropertyInfo,
+  getPropertyInfoLoading,
+} from '../../../../store/selectors/page-state.selectors';
+import {
+  loadPropertyInfo,
+  resetMapPins,
+  updatePropertyInfoFavorite,
+} from '../../../../store/actions/page-state.actions';
 
 @Component({
   selector: 'app-apartment-listing-page',
@@ -17,22 +25,20 @@ export class ApartmentListingPageComponent implements OnInit {
   propertyInfoLoading$: Observable<boolean>;
 
   constructor(private store: Store<AppState>) {
-    this.currentDevice$ = this.store.select(fromSelectors.getCurrentDevice);
-    this.property$ = this.store.select(fromSelectors.getPropertyInfo);
-    this.propertyInfoLoading$ = this.store.select(
-      fromSelectors.getPropertyInfoLoading
-    );
+    this.currentDevice$ = this.store.select(getCurrentDevice);
+    this.property$ = this.store.select(getPropertyInfo);
+    this.propertyInfoLoading$ = this.store.select(getPropertyInfoLoading);
   }
 
   ngOnInit() {
-    this.store.dispatch(fromActions.loadPropertyInfo());
+    this.store.dispatch(loadPropertyInfo());
   }
 
   backToListings(e) {
-    this.store.dispatch(fromActions.resetMapPins());
+    this.store.dispatch(resetMapPins());
   }
 
   updatePropertyFavorite() {
-    this.store.dispatch(fromActions.updatePropertyInfoFavorite());
+    this.store.dispatch(updatePropertyInfoFavorite());
   }
 }

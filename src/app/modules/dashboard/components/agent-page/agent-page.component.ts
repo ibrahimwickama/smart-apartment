@@ -1,10 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppState } from '../../../../store/reducers';
-import * as fromSelectors from '../../../../store/selectors';
-import * as fromActions from '../../../../store/actions';
 import { Store } from '@ngrx/store';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import {
+  updateMapPinsFromFilters,
+  resetMapPins,
+} from 'src/app/store/actions/page-state.actions';
+import {
+  getCurrentDevice,
+  getApartmentListingsLoading,
+  getAgentInfo,
+  getApartmentListingData,
+} from 'src/app/store/selectors/page-state.selectors';
 
 @Component({
   selector: 'app-agent-page',
@@ -27,14 +35,12 @@ export class AgentPageComponent implements OnInit {
   filterFavoriteProperty: boolean = false;
 
   constructor(private store: Store<AppState>) {
-    this.currentDevice$ = this.store.select(fromSelectors.getCurrentDevice);
+    this.currentDevice$ = this.store.select(getCurrentDevice);
     this.apartmentListingsLoading$ = this.store.select(
-      fromSelectors.getApartmentListingsLoading
+      getApartmentListingsLoading
     );
-    this.agentInfo$ = this.store.select(fromSelectors.getAgentInfo);
-    this.apartmentListing$ = this.store.select(
-      fromSelectors.getApartmentListingData
-    );
+    this.agentInfo$ = this.store.select(getAgentInfo);
+    this.apartmentListing$ = this.store.select(getApartmentListingData);
   }
 
   ngOnInit() {}
@@ -94,9 +100,7 @@ export class AgentPageComponent implements OnInit {
       bedrooms: this.bedroomsSelections,
       favoriteProperties: this.filterFavoriteProperty,
     };
-    this.store.dispatch(
-      fromActions.updateMapPinsFromFilters({ payload: filterPayload })
-    );
+    this.store.dispatch(updateMapPinsFromFilters({ payload: filterPayload }));
   }
 
   resetFilters() {
@@ -108,6 +112,6 @@ export class AgentPageComponent implements OnInit {
       bed3: false,
     };
     this.filterFavoriteProperty = false;
-    this.store.dispatch(fromActions.resetMapPins());
+    this.store.dispatch(resetMapPins());
   }
 }

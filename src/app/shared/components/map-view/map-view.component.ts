@@ -2,12 +2,11 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/reducers';
-import * as fromActions from '../../../store/actions';
-import * as fromSelectors from '../../../store/selectors';
 import {
   mapboxToken,
   mapTilerToken,
 } from '../../../../assets/configurations/mapbox';
+import { getMapPins, getPropertyInfoLoading, getApartmentListingsLoading } from '../../../store/selectors/page-state.selectors';
 declare let mapboxgl: any;
 
 @Component({
@@ -28,12 +27,12 @@ export class MapViewComponent implements OnInit, AfterViewInit {
   constructor(private store: Store<AppState>) {
     mapboxgl.accessToken = mapboxToken;
     this.apartmentListingsLoading$ = this.store.select(
-      fromSelectors.getApartmentListingsLoading
+      getApartmentListingsLoading
     );
     this.propertyInfoLoading$ = this.store.select(
-      fromSelectors.getPropertyInfoLoading
+      getPropertyInfoLoading
     );
-    this.store.select(fromSelectors.getMapPins).subscribe((mapPins) => {
+    this.store.select(getMapPins).subscribe((mapPins) => {
       this.mapPins = mapPins;
       // TODO: Find best way to update map without re-rendering entire map visualization
       if (mapPins.length > 1) {

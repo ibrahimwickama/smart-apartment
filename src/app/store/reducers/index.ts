@@ -7,16 +7,16 @@ import {
 } from '@ngrx/store';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { environment } from '../../../environments/environment';
-import * as fromPageState from './page-state.reducer';
 import { RouterReducerState, routerReducer } from '@ngrx/router-store';
+import { State, reducer } from './page-state.reducer';
 
 export interface AppState {
-  pageState: fromPageState.State;
+  pageState: State;
   router: RouterReducerState;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
-  pageState: fromPageState.reducer,
+  pageState: reducer,
   router: routerReducer,
 };
 
