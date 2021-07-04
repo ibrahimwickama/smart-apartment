@@ -8,11 +8,9 @@ import {
 } from '../models/page-state.model';
 import {
   sanitizeApartmentListingPayload,
-  getMapPinsFromListingRecords,
-  getMapPinFromPropertyInfo,
-  resetMapPinsInformation,
   filterApartmentsListingFromFilterselections,
-} from '../../shared/helpers';
+} from '../../shared/helpers/apartment-listing.helper';
+
 import {
   addAgentListings,
   loadCurrentDevice,
@@ -25,6 +23,11 @@ import {
   updateCurrentPropertyInfo,
   updatePropertyInfoFavorite,
 } from '../actions/page-state.actions';
+import {
+  resetMapPinsInformation,
+  getMapPinFromPropertyInfo,
+  getMapPinsFromListingRecords,
+} from '../../shared/helpers/map.helper';
 
 export const pageStatesFeatureKey = 'pageStates';
 
