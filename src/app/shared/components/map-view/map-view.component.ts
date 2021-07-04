@@ -86,11 +86,9 @@ export class MapViewComponent implements OnInit, AfterViewInit {
             features: markersPins,
           },
         });
-
         /// get source
         this.source = this.map.getSource('smartApartments');
-
-        /// create map layers with realtime data
+        /// create map layers
         this.map.addLayer({
           id: 'smartApartments',
           source: 'smartApartments',
@@ -115,9 +113,9 @@ export class MapViewComponent implements OnInit, AfterViewInit {
   loadMapWithPins() {
     // delete all maerkers
     this.markerElements.forEach((markerToRemove) => {
-      var markerElement = document.getElementById(markerToRemove.propertyid);
+      let markerPinLayer = document.getElementById(markerToRemove.propertyid);
       try {
-        markerElement.remove();
+        markerPinLayer.remove();
       } catch (e) {}
     });
 
@@ -125,7 +123,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
     // add markers to map
     const bounds = [];
     this.mapPins.forEach((marker) => {
-      // make a marker for each feature and add it to the map
+      // make a marker for each feature and add it to the map as a layer
       bounds.push(
         new mapboxgl.LngLat(marker.coordinates[0], marker.coordinates[1])
       );
@@ -195,8 +193,8 @@ export class MapViewComponent implements OnInit, AfterViewInit {
         (markerElement) => markerElement.propertyid !== focusedMarker.id
       );
       toRemoveMarkers.forEach((markerToRemove) => {
-        var markerElement = document.getElementById(markerToRemove.propertyid);
-        markerElement.remove();
+        let markerPinLayer = document.getElementById(markerToRemove.propertyid);
+        markerPinLayer.remove();
       });
       // fly to marker
       this.map.flyTo({
