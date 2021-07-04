@@ -27,15 +27,12 @@ declare let mapboxgl: any;
 export class MapViewComponent implements OnInit, AfterViewInit {
   apartmentListingsLoading$: Observable<boolean>;
   propertyInfoLoading$: Observable<boolean>;
-
   map: any;
-  // map: mapboxgl.Map;
   style =
     'https://api.maptiler.com/maps/eef16200-c4cc-4285-9370-c71ca24bb42d/style.json?key=CH1cYDfxBV9ZBu1lHGqh';
-
   mapPins: any = [];
   markerElements: any = [];
-
+  mapLoaded: boolean = false;
   source: any;
   markers: any;
 
@@ -47,13 +44,9 @@ export class MapViewComponent implements OnInit, AfterViewInit {
     this.propertyInfoLoading$ = this.store.select(getPropertyInfoLoading);
     this.store.select(getMapPins).subscribe((mapPins) => {
       this.mapPins = mapPins;
-      // TODO: Find best way to update map without re-rendering entire map visualization
-      if (mapPins.length > 1) {
-        // this.loadMapWithPins();
-        setTimeout(() => {
-          this.loadMapWithPins();
-        }, 10000);
-      } else if (mapPins.length == 1) {
+      if (mapPins.length > 1 && this.mapLoaded) {
+        this.loadMapWithPins();
+      } else if (mapPins.length == 1 && this.mapLoaded) {
         this.zoomToMarker();
       }
     });
@@ -73,112 +66,6 @@ export class MapViewComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {}
-
-  // buildMap() {
-  //   try {
-  //     let map = new mapboxgl.Map({
-  //       container: 'map',
-  //       style: this.style,
-  //       zoom: 12.7,
-  //       center: this.getCenterCoordinates(),
-  //     });
-
-  //     // add markers to map
-  //     const bounds = [];
-  //     this.mapPins.forEach(function (marker) {
-  //       // make a marker for each feature and add it to the map
-  //       bounds.push(
-  //         new mapboxgl.LngLat(marker.coordinates[0], marker.coordinates[1])
-  //       );
-  //       // create custom marker html
-  //       var el = document.createElement('div');
-  //       el.className = 'marker';
-  //       el.id = marker?.id;
-  //       el.style.backgroundImage = marker.favorite
-  //         ? 'url(/assets/svg/pin-red-heart.svg)'
-  //         : 'url(/assets/svg/pin-red.svg)';
-  //       el.style.width = marker.favorite ? '52px' : '32px';
-  //       el.style.height = marker.favorite ? '52px' : '32px';
-  //       el.style.backgroundSize = '100%';
-  //       // create custom marker html
-  //       const markerElement = new mapboxgl.Marker(el)
-  //         .setLngLat(marker.coordinates)
-  //         .setPopup(
-  //           new mapboxgl.Popup().setHTML(
-  //             `<h4>${marker?.name}</h4>
-  //             <p style="color: #6c757d">
-  //             ${marker?.city}, ${marker?.streetAddress}
-  //             </p>`
-  //           )
-  //         )
-  //         .addTo(map);
-  //       const markerDiv = markerElement.getElement();
-  //       markerDiv.addEventListener('mouseenter', () =>
-  //         markerElement.togglePopup()
-  //       );
-  //       markerDiv.addEventListener('mouseleave', () =>
-  //         markerElement.togglePopup()
-  //       );
-  //       markerElement.getElement().addEventListener('click', (e) => {
-  //         // remove detail pop-up
-  //         markerElement.togglePopup();
-  //         const propertyId = event?.srcElement['id'] || '';
-  //         window.location.href = `#/dashboard/home?view=property&propertyid=${propertyId}`;
-  //       });
-  //     });
-
-  //     this.map = map;
-  //   } catch (e) {}
-  // }
-
-  // zoomToMarker() {
-  //   const coordinates = this.mapPins[0].coordinates || [];
-  //   try {
-  //     let map = new mapboxgl.Map({
-  //       container: 'map',
-  //       style: this.style,
-  //       zoom: 16,
-  //       center: coordinates,
-  //     });
-
-  //     // add markers to map
-  //     this.mapPins.forEach(function (marker) {
-  //       // make a marker for each feature and add it to the map
-  //       // create custom marker html
-  //       var el = document.createElement('div');
-  //       el.className = 'marker';
-  //       el.id = marker?.id;
-  //       el.style.backgroundImage = marker.favorite
-  //         ? 'url(/assets/svg/pin-red-heart.svg)'
-  //         : 'url(/assets/svg/pin-red.svg)';
-  //       el.style.width = '52px';
-  //       el.style.height = '52px';
-  //       el.style.backgroundSize = '100%';
-  //       // create custom marker html
-
-  //       const markerElement = new mapboxgl.Marker(el)
-  //         .setLngLat(marker.coordinates)
-  //         .setPopup(
-  //           new mapboxgl.Popup().setHTML(
-  //             `<h4>${marker?.name}</h4>
-  //             <p style="color: #6c757d">
-  //             ${marker?.city}, ${marker?.streetAddress}
-  //             </p>`
-  //           )
-  //         )
-  //         .addTo(map);
-  //       const markerDiv = markerElement.getElement();
-  //       markerDiv.addEventListener('mouseenter', () =>
-  //         markerElement.togglePopup()
-  //       );
-  //       markerDiv.addEventListener('mouseleave', () =>
-  //         markerElement.togglePopup()
-  //       );
-  //     });
-  //     this.map = map;
-  //   } catch (e) {}
-  // }
-
   buildInitMap() {
     try {
       this.map = new mapboxgl.Map({
@@ -219,15 +106,22 @@ export class MapViewComponent implements OnInit, AfterViewInit {
             'text-halo-width': 2,
           },
         });
-        // this.loadMapWithPins();
+        this.mapLoaded = true;
+        this.loadMapWithPins();
       });
     } catch (e) {}
   }
 
   loadMapWithPins() {
+    // delete all maerkers
+    this.markerElements.forEach((markerToRemove) => {
+      var markerElement = document.getElementById(markerToRemove.propertyid);
+      try {
+        markerElement.remove();
+      } catch (e) {}
+    });
+
     this.markerElements = [];
-    /// get source
-    // this.source = this.map.getSource('smartApartments');
     // add markers to map
     const bounds = [];
     this.mapPins.forEach((marker) => {
@@ -294,66 +188,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
     });
   }
 
-  buildMap() {
-    try {
-      let map = new mapboxgl.Map({
-        container: 'map',
-        style: this.style,
-        zoom: 12.7,
-        center: this.getCenterCoordinates(),
-      });
-
-      // add markers to map
-      const bounds = [];
-      this.mapPins.forEach(function (marker) {
-        // make a marker for each feature and add it to the map
-        bounds.push(
-          new mapboxgl.LngLat(marker.coordinates[0], marker.coordinates[1])
-        );
-        // create custom marker html
-        var el = document.createElement('div');
-        el.className = 'marker';
-        el.id = marker?.id;
-        el.style.backgroundImage = marker.favorite
-          ? 'url(/assets/svg/pin-red-heart.svg)'
-          : 'url(/assets/svg/pin-red.svg)';
-        el.style.width = marker.favorite ? '52px' : '32px';
-        el.style.height = marker.favorite ? '52px' : '32px';
-        el.style.backgroundSize = '100%';
-        // create custom marker html
-        const markerElement = new mapboxgl.Marker(el)
-          .setLngLat(marker.coordinates)
-          .setPopup(
-            new mapboxgl.Popup().setHTML(
-              `<h4>${marker?.name}</h4>
-              <p style="color: #6c757d">
-              ${marker?.city}, ${marker?.streetAddress}
-              </p>`
-            )
-          )
-          .addTo(map);
-        const markerDiv = markerElement.getElement();
-        markerDiv.addEventListener('mouseenter', () =>
-          markerElement.togglePopup()
-        );
-        markerDiv.addEventListener('mouseleave', () =>
-          markerElement.togglePopup()
-        );
-        markerElement.getElement().addEventListener('click', (e) => {
-          map.flyTo(e.latlng, 13);
-          // remove detail pop-up
-          markerElement.togglePopup();
-          const propertyId = event?.srcElement['id'] || '';
-          window.location.href = `#/dashboard/home?view=property&propertyid=${propertyId}`;
-        });
-      });
-
-      this.map = map;
-    } catch (e) {}
-  }
-
   zoomToMarker() {
-    // const coordinates = this.mapPins[0].coordinates || [];
     const focusedMarker = this.mapPins[0];
     try {
       const toRemoveMarkers = this.markerElements.filter(
@@ -362,6 +197,12 @@ export class MapViewComponent implements OnInit, AfterViewInit {
       toRemoveMarkers.forEach((markerToRemove) => {
         var markerElement = document.getElementById(markerToRemove.propertyid);
         markerElement.remove();
+      });
+      // fly to marker
+      this.map.flyTo({
+        center: focusedMarker.coordinates,
+        essential: true,
+        zoom: 16,
       });
     } catch (e) {}
   }
