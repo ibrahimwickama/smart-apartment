@@ -1,53 +1,57 @@
 import { createSelector } from '@ngrx/store';
-import * as fromMainReducer from '../reducers';
-import * as fromPageStateReducer from '../reducers/page-state.reducer';
+import { getRootState, AppState } from '../reducers';
+import {
+  getCurrentDeviceState,
+  getNotificationState,
+  getNotificationStatusState,
+  getApartmentListingsLoadingState,
+  getAllApartmentListingDataState,
+  getAgentInfoState,
+  getPropertyInfoState,
+  getPropertyInfoLoadingState,
+  getMapPinstate,
+} from '../reducers/page-state.reducer';
 
 export const getPageState = createSelector(
-  fromMainReducer.getRootState,
-  (state: fromMainReducer.AppState) => state.pageState
+  getRootState,
+  (state: AppState) => state.pageState
 );
 
 export const getCurrentDevice = createSelector(
   getPageState,
-  fromPageStateReducer.getCurrentDeviceState
+  getCurrentDeviceState
 );
 
 export const getNotification = createSelector(
   getPageState,
-  fromPageStateReducer.getNotificationState
+  getNotificationState
 );
 
 export const getNotificationStatus = createSelector(
   getPageState,
-  fromPageStateReducer.getNotificationStatusState
+  getNotificationStatusState
 );
 
 export const getApartmentListingsLoading = createSelector(
   getPageState,
-  fromPageStateReducer.getApartmentListingsLoadingState
+  getApartmentListingsLoadingState
 );
 
 export const getApartmentListingData = createSelector(
   getPageState,
-  fromPageStateReducer.getAllApartmentListingDataState
+  getAllApartmentListingDataState
 );
 
-export const getAgentInfo = createSelector(
-  getPageState,
-  fromPageStateReducer.getAgentInfoState
-);
+export const getAgentInfo = createSelector(getPageState, getAgentInfoState);
 
 export const getPropertyInfo = createSelector(
   getPageState,
-  fromPageStateReducer.getPropertyInfoState
+  getPropertyInfoState
 );
 
 export const getPropertyInfoLoading = createSelector(
   getPageState,
-  fromPageStateReducer.getPropertyInfoLoadingState
+  getPropertyInfoLoadingState
 );
 
-export const getMapPins = createSelector(
-  getPageState,
-  fromPageStateReducer.getMapPinstate
-);
+export const getMapPins = createSelector(getPageState, getMapPinstate);

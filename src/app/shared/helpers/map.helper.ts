@@ -37,3 +37,14 @@ export function getMapPinFromPropertyInfo(propertyInfo) {
   });
   return marker;
 }
+
+export function convertMapPinsToMarkers(mapPins) {
+  return mapPins.map((mapPin) => ({
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: mapPin.coordinates,
+    },
+    properties: {},
+  }));
+}

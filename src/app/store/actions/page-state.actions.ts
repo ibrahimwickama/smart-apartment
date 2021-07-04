@@ -6,7 +6,7 @@ import {
   NotificationPayload,
   AgentListing,
   PropertyInfo,
-} from '../models';
+} from '../models/page-state.model';
 
 export const loadApartmentListings = createAction(
   '[PageState/API] Load Apartments Listings'

@@ -1,11 +1,10 @@
 import { createSelector } from '@ngrx/store';
-import * as fromMainReducer from '../reducers';
-import { getRouterState } from '../reducers/index';
 import { getSelectors } from '@ngrx/router-store';
+import { getRootState, AppState, getRouterState } from '../reducers';
 
 export const getRouter = createSelector(
-  fromMainReducer.getRootState,
-  (state: fromMainReducer.AppState) => state.router
+  getRootState,
+  (state: AppState) => state.router
 );
 
 const {
