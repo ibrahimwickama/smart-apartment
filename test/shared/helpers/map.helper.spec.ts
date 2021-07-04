@@ -3,7 +3,7 @@ import {
   getMapPinsFromListingRecords,
   resetMapPinsInformation,
   getMapPinFromPropertyInfo,
-} from '../../../src/app/shared/helpers';
+} from '../../../src/app/shared/helpers/map.helper';
 import {
   testRecord,
   testStoreEntities,

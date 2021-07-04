@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { sanitizeApartmentListingPayload } from '../../../src/app/shared/helpers';
+import { sanitizeApartmentListingPayload } from '../../../src/app/shared/helpers/apartment-listing.helper';
 import { testRecords } from '../constants/test.constants';
 
 describe('Check Record Listing With Additional ID', () => {
