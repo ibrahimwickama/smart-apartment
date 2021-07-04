@@ -5,7 +5,7 @@ import {
   NotificationPayload,
   AgentInfo,
   PropertyInfo,
-} from '../models';
+} from '../models/page-state.model';
 import {
   sanitizeApartmentListingPayload,
   getMapPinsFromListingRecords,

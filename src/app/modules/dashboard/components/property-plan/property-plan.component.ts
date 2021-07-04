@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Floorplans } from '../../../../store/models';
+import { Floorplans } from '../../../../store/models/page-state.model';
 
 @Component({
   selector: 'app-property-plan',

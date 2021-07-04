@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { PropertyInfo } from '../../../../store/models';
+import { PropertyInfo } from '../../../../store/models/page-state.model';
 
 @Component({
   selector: 'app-property-overview',
