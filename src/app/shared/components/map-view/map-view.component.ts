@@ -15,8 +15,6 @@ import { first } from 'rxjs/operators';
 import { FeatureCollection } from '../../../store/models/map';
 import { convertMapPinsToMarkers } from '../../helpers/map.helper';
 
-// import * as mapboxgl from '';
-// let mapboxgl = require('mapbox-gl')
 declare let mapboxgl: any;
 
 @Component({
